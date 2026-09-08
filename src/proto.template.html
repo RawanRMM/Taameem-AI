@@ -1,0 +1,643 @@
+<title>Taameem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>window.tailwind && (tailwind.config = { corePlugins: { preflight: true } });</script>
+<style>
+:root{color-scheme:light;--navy:#0F2237;--navy2:#16304A;--green:#119A78;--green2:#0B6F62;--teal:#7FD8C0;--mint:#DDF2EA;--cream:#F6F4EE;--paper:#FFFFFF;--paper2:#FBFAF6;--paper3:#F1EEE6;--chipbg:#EEEBE3;--navySoft:#E3E9F6;--ink:#14213A;--ink2:#4A5570;--muted:#7C8599;--line:#E3DFD5;--coral:#B8412F;--coralSoft:#FBE9E7;--gold:#B8892B;--goldSoft:#FBF0D3;--blue:#2F6BFF;--chrome:#0A1626;--dots:rgba(15,34,55,.07);--glow:rgba(17,154,120,.12);--onnavy:#DCE6F2}
+html[data-theme="dark"]{color-scheme:dark;--navy:#0B1A2C;--navy2:#13273F;--green:#1FA69C;--green2:#6FE0D8;--teal:#7FD8C0;--mint:#0F2E2C;--cream:#0A1220;--paper:#111C2E;--paper2:#0F1929;--paper3:#162338;--chipbg:#1B2A42;--navySoft:#1A2A46;--ink:#E7ECF5;--ink2:#B4BDD0;--muted:#8896AE;--line:#22304A;--coral:#F19A8A;--coralSoft:#3A1B19;--gold:#E3B34F;--goldSoft:#3A2E12;--chrome:#060C16;--dots:rgba(157,178,255,.08);--glow:rgba(31,166,156,.18);--onnavy:#DCE6F2}
+html[data-theme="dark"] .top{background:#060C16}
+html[data-theme="dark"] .guide{background:linear-gradient(135deg,#13273F,#1A3350);box-shadow:none;border:1px solid #22304A}
+html[data-theme="dark"] .log{background:#050B14;border:1px solid #22304A}
+html[data-theme="dark"] .report::before{opacity:.8}
+html[data-theme="dark"] .doc .cl.hl{background:#5A4A12;color:#fff}
+html[data-theme="dark"] .diff mark{background:#5A4A12;color:#fff}
+html[data-theme="dark"] .diff .before{background:#2A1614;border-color:#4A2622}html[data-theme="dark"] .diff .after{background:#0F2E2C;border-color:#1F4A45}
+html[data-theme="dark"] .card,html[data-theme="dark"] .msg,html[data-theme="dark"] .ev,html[data-theme="dark"] .stp,html[data-theme="dark"] .report{box-shadow:0 14px 34px -26px rgba(0,0,0,.8)}
+html[data-theme="dark"] .rep-head{border-bottom-color:var(--green)}html[data-theme="dark"] .rep-title{color:var(--ink)}
+html[data-theme="dark"] .top .role button.on{color:#04211F}
+html[data-theme="dark"] .pill.navy{background:var(--navySoft);color:#9DB2FF}
+html[data-theme="dark"] .btn.navy{background:var(--green2);border-color:var(--green2);color:#04211F}
+html[data-theme="dark"] .node.ob{background:var(--green2);color:#04211F;border-color:var(--green2)}
+html[data-theme="dark"] .mod.must{background:var(--navySoft);color:#9DB2FF}
+html[data-theme="dark"] .who.hu{background:#1A2A46;color:#9DB2FF}
+html[data-theme="dark"] .guide .who.hu{background:#2A3F63;color:#C9D6FF}
+html[data-theme="dark"] .logo-dark{display:none}
+html:not([data-theme="dark"]) .logo-light{display:none}
+*{transition:background-color .25s,border-color .25s,color .15s}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--cream);color:var(--ink);font-family:Inter,"IBM Plex Sans Arabic",system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.5}
+html[dir="rtl"] body{font-family:"IBM Plex Sans Arabic",Inter,system-ui,sans-serif}
+#root{height:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.mono{font-family:"IBM Plex Mono",monospace;direction:ltr;unicode-bidi:isolate}
+.svgi{width:1em;height:1em;flex:none;display:inline-block;vertical-align:-.15em}
+.btn .svgi,.pill .svgi{width:.95em;height:.95em}
+.ibtn .svgi{width:1.1rem;height:1.1rem}
+.mode{display:inline-flex;background:var(--chipbg);border-radius:999px;padding:3px;gap:2px}
+.mode button{display:inline-flex;align-items:center;gap:.35rem;padding:.32rem .8rem;border-radius:999px;font-size:.78rem;font-weight:600;color:var(--ink2);white-space:nowrap}
+.mode button.on{background:var(--green);color:#04211F}
+.ar{font-family:"IBM Plex Sans Arabic",sans-serif;direction:rtl;unicode-bidi:isolate;text-align:right}
+.app{height:100%;display:grid;grid-template-columns:250px 1fr;grid-template-rows:56px 1fr}
+.app.simple{grid-template-columns:1fr}
+.app.simple .side{display:none}
+.app.simple .main::before,.app.simple .wm-bg{inset:56px 0 0 0}
+.app.simple .mode,.app.simple .h p{display:none}
+.app.simple .main{padding-top:0}
+.strip{position:sticky;top:0;z-index:5;margin:0 -1.6rem 1.2rem;padding:.9rem 1.6rem .7rem;background:linear-gradient(180deg,var(--cream) 78%,transparent);display:grid;grid-template-columns:auto repeat(7,1fr);gap:.4rem;align-items:start}
+.strip .home{display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:0 .6rem 0 0;border-inline-end:1px solid var(--line);margin-inline-end:.4rem;color:var(--muted);font-size:.7rem;font-weight:600}
+.strip .step{display:flex;flex-direction:column;align-items:center;gap:.35rem;text-align:center;position:relative;padding-top:2px}
+.strip .step::before{content:"";position:absolute;top:22px;left:50%;width:100%;height:0;border-top:2px dashed var(--green);opacity:.55;z-index:0}
+.strip .step:last-child::before{display:none}
+.strip .c{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;border:3px solid var(--cream);box-shadow:0 8px 18px -10px rgba(15,34,55,.6);position:relative;z-index:1;transition:transform .2s}
+.strip .c .svgi{width:20px;height:20px}
+.strip .c.ai{background:var(--green)}.strip .c.hu{background:var(--navy)}.strip .c.rd{background:var(--gold)}.strip .c.sys{background:#7C8599}
+.strip .step.on .c{transform:scale(1.15);box-shadow:0 0 0 4px var(--mint),0 10px 22px -10px rgba(15,34,55,.6)}
+.strip .step.done .c{background:var(--green)}
+.strip .t{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:.86rem;line-height:1.15;color:var(--ink2)}
+html[dir="rtl"] .strip .t{font-family:"Noto Kufi Arabic",sans-serif;font-size:.8rem}
+.strip .step.on .t{color:var(--ink)}
+.strip .n{position:absolute;top:-4px;inset-inline-end:calc(50% - 30px);background:var(--paper);color:var(--ink2);font-family:"IBM Plex Mono",monospace;font-size:.62rem;font-weight:700;width:18px;height:18px;border-radius:5px;display:grid;place-items:center;border:1px solid var(--line);z-index:2}
+.strip .home .c{background:var(--paper);color:var(--ink2);border-color:var(--line)}
+.strip .step:hover .c{transform:scale(1.08)}
+.sguide{display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;background:linear-gradient(135deg,#0F2237,#16304A);color:var(--onnavy);border-radius:14px;padding:.85rem 1.1rem;margin-bottom:1rem;box-shadow:0 20px 40px -26px rgba(15,34,55,.7)}
+.sguide .big{font-size:1.02rem;line-height:1.45;color:#fff}
+.sguide .ex{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--teal);margin-top:.25rem}
+.sguide .ex b{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#9DB0C4;font-weight:700}
+html[dir="rtl"] .sguide .ex b{letter-spacing:0}
+.sguide .do{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:.5rem .8rem;font-size:.82rem;max-width:26ch;color:#fff}
+.sguide .do b{display:block;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+html[dir="rtl"] .sguide .do b{letter-spacing:0}
+.nextfab{position:fixed;bottom:1.2rem;inset-inline-end:1.2rem;z-index:40;display:flex;gap:.5rem}
+.nextfab .btn{box-shadow:0 18px 40px -18px rgba(15,34,55,.7)}
+.topbar-line{position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--green),var(--teal));opacity:.9}
+@media(max-width:900px){.strip{grid-template-columns:auto repeat(7,1fr);gap:.2rem}.strip .t{display:none}.sguide{grid-template-columns:1fr}.sguide .do{max-width:none}}
+.top{grid-column:1/-1;display:flex;align-items:center;gap:1rem;padding:0 1.1rem;background:var(--navy);color:var(--onnavy);position:relative;overflow:hidden}
+.top::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 200px at 90% 0%,rgba(31,166,156,.35),transparent 60%);pointer-events:none}
+.top>*{position:relative}
+.top img{height:26px}
+.top .role{display:flex;background:rgba(255,255,255,.08);border-radius:999px;padding:3px}
+.top .role button{padding:.3rem .8rem;border-radius:999px;font-size:.78rem;font-weight:600;color:#B9C6D6}
+.top .role button.on{background:var(--green);color:#04211F}
+.top .sp{flex:1}
+.pill{display:inline-flex;align-items:center;gap:.35rem;padding:.2rem .6rem;border-radius:999px;font-size:.72rem;font-weight:600;border:1px solid transparent;white-space:nowrap}
+.pill.green{background:var(--mint);color:var(--green2)}.pill.gold{background:var(--goldSoft);color:var(--gold)}.pill.coral{background:var(--coralSoft);color:var(--coral)}.pill.navy{background:var(--navySoft);color:var(--navy)}.pill.grey{background:var(--chipbg);color:var(--ink2)}.pill.outline{border-color:rgba(255,255,255,.25);color:var(--onnavy)}
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .95rem;border-radius:10px;font-size:.84rem;font-weight:600;border:1px solid var(--line);background:var(--paper);color:var(--ink);transition:transform .15s,box-shadow .15s,background .15s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px -12px rgba(15,34,55,.4)}
+.btn.pri{background:var(--green);border-color:var(--green);color:#fff}.btn.pri:hover{background:#0F8C6D}
+.btn.navy{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.ghost{background:transparent}
+.btn.sm{padding:.35rem .65rem;font-size:.76rem;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.side{background:var(--paper);border-inline-end:1px solid var(--line);padding:1rem .8rem;display:flex;flex-direction:column;gap:.25rem;overflow:auto}
+.side .lbl{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:.6rem .6rem .3rem}
+html[dir="rtl"] .side .lbl{letter-spacing:0}
+.nav{display:flex;align-items:center;gap:.6rem;padding:.55rem .7rem;border-radius:10px;font-size:.86rem;color:var(--ink2);text-align:start;width:100%}
+.nav:hover{background:var(--cream)}
+.nav.on{background:var(--mint);color:var(--green2);font-weight:600}
+.nav .n{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:.7rem;border:1.5px solid var(--line);flex:none;background:var(--paper)}
+.nav.on .n{border-color:var(--green);color:var(--green2)}
+.nav.done .n{background:var(--green);border-color:var(--green);color:#fff}
+.nav .st{margin-inline-start:auto;font-size:.66rem;color:var(--muted)}
+.main{overflow:auto;padding:1.4rem 1.6rem 3rem;position:relative}
+.main::before{content:"";position:fixed;inset:56px 0 0 250px;pointer-events:none;z-index:0;
+  background:radial-gradient(900px 520px at 100% -5%,var(--glow),transparent 62%),radial-gradient(700px 500px at -5% 105%,rgba(15,34,55,.10),transparent 60%),radial-gradient(var(--dots) 1px,transparent 1.3px) 0 0/22px 22px}
+html[dir="rtl"] .main::before{inset:56px 250px 0 0;background:radial-gradient(900px 520px at 0% -5%,var(--glow),transparent 62%),radial-gradient(700px 500px at 105% 105%,rgba(15,34,55,.10),transparent 60%),radial-gradient(var(--dots) 1px,transparent 1.3px) 0 0/22px 22px}
+html[data-theme="dark"] .main::before{background:radial-gradient(900px 620px at 100% -10%,rgba(31,166,156,.30),rgba(17,154,120,.08) 45%,transparent 70%),radial-gradient(700px 520px at -5% 105%,rgba(47,107,255,.14),transparent 60%),repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 1px,transparent 1px 15px),radial-gradient(var(--dots) 1px,transparent 1.3px) 0 0/22px 22px}
+html[data-theme="dark"][dir="rtl"] .main::before{background:radial-gradient(900px 620px at 0% -10%,rgba(31,166,156,.30),rgba(17,154,120,.08) 45%,transparent 70%),radial-gradient(700px 520px at 105% 105%,rgba(47,107,255,.14),transparent 60%),repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0 1px,transparent 1px 15px),radial-gradient(var(--dots) 1px,transparent 1.3px) 0 0/22px 22px}
+.wm-bg{position:fixed;inset:56px 0 0 250px;pointer-events:none;z-index:0;overflow:hidden}
+html[dir="rtl"] .wm-bg{inset:56px 250px 0 0}
+.wm-bg img{position:absolute;right:-90px;bottom:-140px;height:min(72vh,720px);width:auto;opacity:.09;transform:rotate(-8deg);filter:saturate(.9)}
+html[dir="rtl"] .wm-bg img{right:auto;left:-90px;transform:rotate(8deg) scaleX(-1)}
+html[data-theme="dark"] .wm-bg img{opacity:.13}
+.wm-bg .wm-word{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);height:min(22vh,190px);opacity:.035;filter:grayscale(1)}
+html[data-theme="dark"] .wm-bg .wm-word{opacity:.05}
+.wm-bg .glow-orb{position:absolute;width:760px;height:760px;border-radius:50%;background:radial-gradient(circle,rgba(31,166,156,.28),rgba(31,166,156,0) 62%);filter:blur(28px);right:-220px;top:-320px;animation:drift 18s ease-in-out infinite alternate;display:none}
+html[data-theme="dark"] .wm-bg .glow-orb{display:block}
+html[dir="rtl"] .wm-bg .glow-orb{right:auto;left:-220px}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(-110px,80px)}}
+.main>*{position:relative;z-index:1}
+.card,.msg,.ev,.stp,.tier,.report{box-shadow:0 14px 34px -26px rgba(15,34,55,.35)}
+@media (prefers-reduced-motion:reduce){.glow-orb{animation:none}}
+.main>*{position:relative;z-index:1}
+.h{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:1.1rem;flex-wrap:wrap}
+.h h1{font-family:Fraunces,Georgia,serif;font-size:1.7rem;font-weight:600;margin:0;line-height:1.15;letter-spacing:-.01em}
+html[dir="rtl"] .h h1{font-family:"Noto Kufi Arabic",sans-serif;font-weight:700;font-size:1.45rem}
+.h p{margin:.3rem 0 0;color:var(--ink2);max-width:70ch}
+.kick{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:700;display:flex;align-items:center;gap:.5rem}
+.kick::before{content:"";width:18px;height:2px;background:var(--green)}
+html[dir="rtl"] .kick{letter-spacing:0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;box-shadow:0 14px 34px -26px rgba(15,34,55,.4)}
+.card h3{margin:0 0 .6rem;font-size:.95rem;font-weight:700}
+.grid{display:grid;gap:1rem}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1100px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{display:grid;gap:.15rem}
+.stat b{font-family:"IBM Plex Mono",monospace;font-size:1.6rem;color:var(--green2);line-height:1.1;direction:ltr;unicode-bidi:isolate;text-align:start}
+.stat span{font-size:.8rem;color:var(--ink2)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th{text-align:start;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:.5rem .6rem;border-bottom:1px solid var(--line);white-space:nowrap}
+html[dir="rtl"] th{letter-spacing:0}
+td{padding:.6rem .6rem;border-bottom:1px solid var(--chipbg);vertical-align:top}
+tr.sel td{background:var(--mint)}
+tr.click{cursor:pointer}tr.click:hover td{background:#F7F5F0}
+.conf{font-family:"IBM Plex Mono",monospace;font-size:.75rem;padding:.1rem .5rem;border-radius:999px;background:var(--mint);color:var(--green2);font-weight:600;direction:ltr;display:inline-block}
+.conf.low{background:var(--goldSoft);color:var(--gold)}
+.mod{font-size:.7rem;font-weight:700;padding:.1rem .45rem;border-radius:6px;letter-spacing:.04em}
+.mod.must{background:var(--navySoft);color:var(--navy)}.mod.must_not{background:var(--coralSoft);color:var(--coral)}.mod.may{background:var(--chipbg);color:var(--ink2)}
+.doc{background:var(--paper2);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.2rem;font-family:"IBM Plex Sans Arabic",sans-serif;direction:rtl;text-align:right;line-height:2;font-size:.95rem;position:relative}
+.doc .ref{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--muted);direction:ltr;text-align:left;display:block;margin-bottom:.4rem}
+.doc .cl{padding:.15rem .4rem;border-radius:6px;transition:background .3s}
+.doc .cl.hl{background:#FFE9A8}
+.doc .cl.dim{opacity:.55}
+.doc .stamp{position:absolute;left:14px;bottom:12px;border:2px solid var(--coral);color:var(--coral);border-radius:6px;padding:.1rem .5rem;font-size:.7rem;font-weight:700;transform:rotate(-8deg);opacity:.7;font-family:Inter,sans-serif;direction:ltr}
+.log{background:var(--navy);color:var(--onnavy);border-radius:12px;padding:.9rem 1rem;font-family:"IBM Plex Mono",monospace;font-size:.76rem;line-height:1.7;min-height:120px;direction:ltr;text-align:left}
+.log .ok{color:var(--teal)}.log .warn{color:#E3B34F}.log .dim{color:#8FA3BA}
+.prog{height:6px;background:#1F3350;border-radius:3px;overflow:hidden;margin:.5rem 0}
+.prog i{display:block;height:100%;background:var(--green);transition:width .35s}
+.steps{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem}
+.stp{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:.8rem .8rem;display:grid;gap:.3rem;position:relative;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.stp:hover{transform:translateY(-2px);box-shadow:0 12px 24px -16px rgba(15,34,55,.4)}
+.stp .n{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--muted)}
+.stp b{font-size:.86rem}
+.stp small{color:var(--ink2);font-size:.74rem;line-height:1.3}
+.stp.done{border-color:var(--green);background:var(--mint)}
+.stp.cur{border-color:var(--navy);box-shadow:0 0 0 3px var(--navySoft)}
+.stp.road{border-style:dashed;border-color:var(--gold)}
+.stp .who{position:absolute;top:.6rem;inset-inline-end:.6rem;font-size:.62rem;font-weight:700;padding:.1rem .4rem;border-radius:999px}
+.who.ai{background:var(--mint);color:var(--green2)}.who.hu{background:var(--navySoft);color:var(--navy)}.who.rd{background:var(--goldSoft);color:var(--gold)}
+.inbox{display:grid;gap:.5rem}
+.msg{display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;align-items:center;padding:.8rem .9rem;background:var(--paper);border:1px solid var(--line);border-radius:12px}
+.msg.new{border-color:var(--green);box-shadow:0 0 0 3px var(--mint)}
+.msg .src{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:.68rem;font-weight:700;color:#fff}
+.src.sama{background:var(--navy)}.src.cma{background:var(--green2)}.src.ia{background:var(--gold)}
+.msg b{display:block;font-size:.9rem}
+.msg small{color:var(--muted);font-size:.74rem}
+.maprow{display:grid;grid-template-columns:90px 1fr;gap:.5rem;padding:.45rem 0;border-bottom:1px dashed var(--line);font-size:.84rem;align-items:baseline}
+.maprow b{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green2)}
+html[dir="rtl"] .maprow b{letter-spacing:0}
+.gap{display:inline-flex;gap:.4rem;align-items:center;font-size:.74rem;font-weight:700;padding:.2rem .6rem;border-radius:999px}
+.gap.high{background:var(--coralSoft);color:var(--coral)}.gap.medium{background:var(--goldSoft);color:var(--gold)}.gap.low{background:var(--mint);color:var(--green2)}.gap.none{background:var(--chipbg);color:var(--ink2)}
+.diff{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.diff>div{border-radius:10px;padding:.8rem .9rem;font-size:.84rem;line-height:1.6}
+.diff .before{background:var(--coralSoft);border:1px solid #F3C9C3}.diff .after{background:var(--mint);border:1px solid #BFE5D8}
+.diff .lb{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:.35rem}
+.diff .before .lb{color:var(--coral)}.diff .after .lb{color:var(--green2)}
+.diff mark{background:#FFE9A8;padding:0 3px;border-radius:3px}
+.ev{display:grid;grid-template-columns:auto 1fr auto;gap:.8rem;align-items:center;padding:.7rem .8rem;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.ev .ic{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;background:var(--chipbg);font-size:.66rem;font-weight:700;color:var(--ink2);font-family:"IBM Plex Mono",monospace}
+.ev .hash{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--muted);direction:ltr;text-align:left;word-break:break-all}
+.bar{height:8px;background:var(--chipbg);border-radius:4px;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.bar .a{background:var(--green)}.bar .b{background:var(--gold)}.bar .c{background:var(--coral)}
+.toast{position:fixed;bottom:1.2rem;inset-inline-end:1.2rem;background:var(--navy);color:#fff;padding:.7rem 1rem;border-radius:12px;font-size:.84rem;box-shadow:0 20px 40px -20px rgba(0,0,0,.6);z-index:50;display:flex;gap:.6rem;align-items:center;animation:up .3s ease}
+@keyframes up{from{transform:translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.fade{animation:fade .45s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.graph{position:relative;height:260px}
+.node{position:absolute;transform:translate(-50%,-50%);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:.4rem .7rem;font-size:.76rem;font-weight:600;text-align:center;box-shadow:0 8px 20px -14px rgba(15,34,55,.4);min-width:120px}
+.node.ob{background:var(--navy);color:#fff;border-color:var(--navy)}
+.node.gap{border-color:var(--coral);background:var(--coralSoft)}
+.node small{display:block;font-weight:500;color:var(--muted);font-size:.66rem}
+.node.ob small{color:#B9C6D6}
+.sup{border:1px dashed var(--gold);background:var(--goldSoft);border-radius:12px;padding:.7rem .9rem;font-size:.82rem;color:var(--ink2);display:flex;gap:.6rem;align-items:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.report{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:1.6rem 1.8rem;box-shadow:0 20px 50px -30px rgba(15,34,55,.5);font-size:.9rem;position:relative}
+.report::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,var(--green),var(--navy));border-radius:6px 6px 0 0}
+.rep-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:.8rem;border-bottom:2px solid var(--navy);margin-bottom:.8rem}
+.rep-title{font-family:Fraunces,"Noto Kufi Arabic",Georgia,serif;font-size:1.3rem;font-weight:700;color:var(--navy)}
+.rep-meta{display:grid;gap:.15rem;font-size:.84rem;color:var(--ink2);margin-bottom:.9rem}
+.rep-intro{line-height:1.7;margin:0 0 1rem}
+.rep-table{font-size:.84rem;margin-bottom:1rem}
+.rep-table th{background:var(--paper3)}
+.rep-table .hash{font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--muted);direction:ltr;text-align:left}
+.rep-sign{display:flex;justify-content:space-between;gap:1rem;align-items:flex-end;border-top:1px dashed var(--line);padding-top:.8rem}
+.rep-note{font-size:.72rem;color:var(--muted);max-width:40ch;text-align:end}
+.sentbox{display:flex;justify-content:space-between;align-items:center;gap:1rem;background:var(--mint);border:1px solid #BFE5D8;border-radius:12px;padding:.9rem 1.1rem;margin-bottom:1rem;font-size:.86rem;color:var(--green2)}
+@media print{body *{visibility:hidden}.report,.report *{visibility:visible}.report{position:absolute;inset:0;box-shadow:none;border:0}.main::before{display:none}}
+.guide{display:grid;grid-template-columns:auto 1fr 1fr;gap:1.2rem;align-items:start;background:linear-gradient(135deg,#0F2237,#16304A);color:var(--onnavy);border-radius:14px;padding:.95rem 1.2rem;margin-bottom:1.1rem;box-shadow:0 20px 40px -26px rgba(15,34,55,.7)}
+.guide .gw{display:flex;align-items:center;height:100%}
+.guide .gw .who{font-size:.74rem;padding:.35rem .7rem;white-space:nowrap}
+.guide .gt{display:grid;gap:.15rem;font-size:.86rem;line-height:1.55}
+.guide .gt b{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:700}
+html[dir="rtl"] .guide .gt b{letter-spacing:0;font-size:.74rem}
+.guide .gt.next{border-inline-start:1px solid rgba(255,255,255,.15);padding-inline-start:1.2rem}
+.guide .gt.next span{color:#fff;font-weight:600}
+@media(max-width:1000px){.guide{grid-template-columns:1fr}.guide .gt.next{border:0;padding:0}}
+select,input[type=text]{font:inherit;padding:.35rem .5rem;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+.lock{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--coral);font-weight:700}
+.btn:active{transform:scale(.97)}
+.ibtn{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;background:rgba(255,255,255,.08);color:var(--onnavy);position:relative;font-size:1rem}
+.ibtn:hover{background:rgba(255,255,255,.16)}
+.badge{position:absolute;top:-3px;inset-inline-end:-3px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--coral);color:#fff;font-size:.66rem;font-weight:700;display:grid;place-items:center;font-family:"IBM Plex Mono",monospace}
+.npanel{position:fixed;top:62px;inset-inline-end:1rem;width:360px;max-height:65vh;overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6);z-index:60;animation:up .25s ease}
+.npanel h4{margin:0;padding:.75rem .9rem;border-bottom:1px solid var(--line);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+html[dir="rtl"] .npanel h4{letter-spacing:0}
+.nitem{padding:.6rem .9rem;border-bottom:1px solid var(--line);font-size:.83rem;display:grid;grid-template-columns:auto 1fr;gap:.6rem;align-items:start}
+.nitem i{width:8px;height:8px;border-radius:50%;background:var(--line);margin-top:.45rem}
+.nitem.unread i{background:var(--green)}
+.nitem small{display:block;color:var(--muted);font-size:.7rem;margin-top:.1rem}
+.stagger>*{animation:fade .45s ease both}
+.stagger>*:nth-child(2){animation-delay:.06s}.stagger>*:nth-child(3){animation-delay:.12s}.stagger>*:nth-child(4){animation-delay:.18s}.stagger>*:nth-child(5){animation-delay:.24s}.stagger>*:nth-child(6){animation-delay:.3s}.stagger>*:nth-child(7){animation-delay:.36s}.stagger>*:nth-child(8){animation-delay:.42s}
+.sprog{height:5px;background:var(--chipbg);border-radius:3px;margin:.3rem .6rem .8rem;overflow:hidden}
+.sprog i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--green2));transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.kbd{font-family:"IBM Plex Mono",monospace;font-size:.66rem;padding:.05rem .3rem;border:1px solid var(--line);border-radius:4px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.fade,.stagger>*,.toast,.npanel{animation:none!important}}
+</style>
+<div id="root"></div>
+<script>
+const LOGO_LIGHT="/*__LOGO_LIGHT__*/", LOGO_DARK="/*__LOGO_DARK__*/", MARK="/*__MARK__*/";
+</script>
+<script>
+const {useState,useEffect,useRef,useMemo,useCallback}=React; const h=React.createElement;
+const ICONS={
+ usercheck:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2|M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z|M16L11L18L13L22L9',
+ compare:'M12 6h5a2 2 0 0 1 2 2v7|m15 9-3-3 3-3|M12 18H7a2 2 0 0 1-2-2V9|m9 15 3 3-3 3|M5 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z|M19 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+ listchecks:'m3 17 2 2 4-4|m3 7 2 2 4-4|M13 6h8|M13 12h8|M13 18h8',
+ fingerprint:'M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4|M14 13.12c0 2.38 0 6.38-1 8.88|M17.29 21.02c.12-.6.43-2.3.5-3.02|M2 12a10 10 0 0 1 18-6|M2 16h.01|M21.8 16c.2-2 .131-5.354 0-6|M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2|M8.65 22c.21-.66.45-1.32.57-2|M9 6.8a6 6 0 0 1 9 5.2v2',
+ layout:'M3 3h7v18h-7z|M14 3h7v7h-7z|M14 14h7v7h-7z',
+ arrowr:'M5 12h14|m12 5 7 7-7 7',
+ arrowl:'m12 19-7-7 7-7|M19 12H5',
+ bell:'M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9|M10.3 21a1.94 1.94 0 0 0 3.4 0',
+ sun:'M12 2v2|M12 20v2|m4.93 4.93 1.41 1.41|m17.66 17.66 1.41 1.41|M2 12h2|M20 12h2|m6.34 17.66-1.41 1.41|m19.07 4.93-1.41 1.41|M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
+ moon:'M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z',
+ lock:'M7 11V7a5 5 0 0 1 10 0v4|M5 11h14v10H5z',
+ play:'m6 3 14 9-14 9V3z',
+ zap:'M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z',
+ hand:'M18 11V6a2 2 0 0 0-4 0v1|M14 10V4a2 2 0 0 0-4 0v2|M10 10.5V6a2 2 0 0 0-4 0v8|M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15',
+ pen:'M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z',
+ send:'m22 2-7 20-4-9-9-4Z|M22 2 11 13',
+ printer:'M6 9V2h12v7|M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2|M6 14h12v8H6z',
+ check:'M20 6 9 17l-5-5',
+ x:'M18 6 6 18|m6 6 12 12',
+ alert:'m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3|M12 9v4|M12 17h.01',
+ clock:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z|M12 6v6l4 2',
+ dot:'M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14z',
+ circle:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z',
+ inbox:'M22 12h-6l-2 3h-4l-2-3H2|M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z',
+ info:'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z|M12 16v-4|M12 8h.01',
+ home:'M3 10.5 12 3l9 7.5|M5 10v10h14V10',
+ refresh:'M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8|M21 3v5h-5|M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16|M8 16H3v5',
+ mail:'M4 4h16v16H4z|m22 7-10 7L2 7',
+ sparkles:'m12 3 1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z'
+};
+const I=(name,extra={})=>h('svg',{viewBox:'0 0 24 24',fill:name==='dot'?'currentColor':'none',stroke:'currentColor',strokeWidth:2,strokeLinecap:'round',strokeLinejoin:'round',className:'svgi '+(extra.className||''),style:extra.style,'aria-hidden':true},...ICONS[name].split('|').map((d,i)=>h('path',{key:i,d})));
+
+/* ================= DATA (scripted, bilingual) ================= */
+const T={
+ en:{brand:'Taameem',roleInst:'Institution',roleSup:'Regulator (roadmap)',lang:'العربية',play:'Play the story',playing:'Playing…',reset:'Reset',
+  nav:['The story','1 · A circular arrives','2 · The AI reads it','3 · A person approves','4 · What must change','5 · Tasks for each team','6 · Proof for the regulator','7 · What the regulator receives'],
+  navSt:{todo:'',done:'done',road:'future'},
+  who:{ai:'The AI does this',hu:'A person does this',rd:'Future step'},
+  guide:{
+    0:{what:'A new circular from the central bank arrives at Innovation Bank. Today, turning it into approved changes and proof takes about 42 working days by hand. Watch the same circular go through Taameem.',next:'Press "Play the story" to watch it run, or click step 1.'},
+    1:{what:'Every morning the system checks the three regulators\' websites and lists what is new. The complaints circular is new and it changes an older version.',next:'Open the circular.'},
+    2:{what:'The AI reads the Arabic text, sentence by sentence, and turns each rule into a clear line: who must do what, by when, and what proof will be needed. It also says how sure it is.',next:'Press "Read the circular", then click any line to see the sentence it came from.'},
+    3:{what:'Nothing continues until the compliance officer checks the AI\'s reading. Anything the AI was less than 85% sure about is marked yellow and must be checked by a person first.',next:'Approve or reject each line. Then continue.'},
+    4:{what:'The AI compares each approved rule with the bank\'s own rulebook: its policies, its controls, its systems, and the person in charge. Where the bank is not ready, it shows a gap and how serious it is.',next:'Press "Find what must change", then click any rule to see its chain.'},
+    5:{what:'For every gap, the AI writes the new wording of the policy (before and after) and creates one task per team, with an owner and a deadline. These are proposals; the teams approve them.',next:'Press "Write drafts and tasks", then send the tasks.'},
+    6:{what:'The teams send their files: the approved policy, the meeting minutes, the system change. The AI writes the report the central bank expects, with one line per rule and the proof for each. A person reads it, approves it, and sends it.',next:'Collect the files, prepare the report, read it, approve it, send it.'},
+    7:{what:'The central bank\'s side. It does not watch the bank. It sees only the reports that institutions chose to send. The reviewer opens a report, reads it with its proof, and accepts it when the circular is really implemented. This needs an agreement with the regulator, so it is a future step.',next:'Click Innovation Bank\'s report, read it, then press "Accept".'}},
+  ov:{kick:'The story in one page',title:'From a circular to proof',lead:'One real-looking circular. Seven steps. At every step you can see who is working: the AI, or a person.',
+      stats:[['1','circular arrives'],['6','rules found in it'],['4','things the bank must change'],['5','proof files fingerprinted']]},
+  steps:[{n:'01',t:'A circular arrives',s:'The system collects it from the regulator\'s site',w:'ai'},{n:'02',t:'The AI reads it',s:'Each sentence becomes a clear rule with a deadline',w:'ai'},{n:'03',t:'A person approves',s:'The compliance officer checks every rule',w:'hu'},{n:'04',t:'What must change',s:'Rules are compared with the bank\'s own policies and systems',w:'ai'},{n:'05',t:'Tasks for each team',s:'New wording drafted, one task per team',w:'ai'},{n:'06',t:'Proof collected',s:'Files added and fingerprinted',w:'hu'},{n:'07',t:'What the regulator receives',s:'Only what you send. It cannot watch you. Future',w:'rd'}],
+  col:{kick:'Step 1 · this morning, 09:05',title:'A new circular arrives',lead:'The system checked the three regulators\' websites this morning. One item is new for Innovation Bank.',open:'Open this circular',newTag:'NEW · replaces an older version',seen:'already handled',affects:'concerns'},
+  ex:{kick:'Step 2 · the AI reads it',title:'Turning the circular into clear rules',lead:'Each Arabic sentence becomes one line: who must do what, by when, and what proof will be needed. The last column shows how sure the AI is.',run:'Read the circular',running:'Reading…',done:'Reading complete',th:['Rule','From sentence','Who','Must / must not / may','What has to happen','Deadline (Hijri · Gregorian)','Proof needed later','How sure'],hint:'Click a line to highlight the sentence it came from.',scan:'Scanned letter · read by OCR'},
+  rv:{kick:'Step 3 · a person decides',title:'The compliance officer checks each rule',lead:'The AI only proposes. A named person confirms that each rule was read correctly. Yellow lines are ones the AI was less sure about, so a person must look first.',approve:'Correct',reject:'Wrong',edit:'Edit',approveAll:'Confirm all the sure ones',status:{pending:'waiting for you',review:'check this one',approved:'confirmed',rejected:'rejected'},approver:'Deciding: the Compliance Officer, Innovation Bank',left:'still to decide'},
+  mp:{kick:'Step 4 · compared with the bank\'s own rulebook',title:'What must change inside the bank',lead:'Each confirmed rule is compared with Innovation Bank\'s own policies, controls, systems and owners. Where the bank is not ready, you see a gap and how serious it is.',run:'Find what must change',running:'Comparing…',gapT:{coverage:'Not covered yet',weak:'Partly covered',evidence:'No proof available',timing:'Deadline problem',none:'Already covered'},sev:{high:'serious',medium:'medium',low:'minor',none:'fine'},rows:['Policy affected','Control affected','System affected','Person in charge'],why:'Why',graph:'The chain: rule → policy → control → system → person in charge'},
+  dr:{kick:'Step 5 · drafts and tasks',title:'New wording, and a task for each team',lead:'For every gap: the policy wording before and after, and one task per team with an owner and a deadline. Everything is a proposal until the teams approve.',gen:'Write drafts and tasks',running:'Writing…',send:'Send the tasks to the teams',sent:'Sent · teams are now working on them',th:['Team','Task','Owner','Deadline (Hijri · Gregorian)','Status'],before:'Before · current policy',after:'After · proposed wording',st:{draft:'draft',sent:'sent',approved:'approved'}},
+  ev:{kick:'Step 6 · the report for the regulator',title:'The AI prepares the report. You review it and send it.',lead:'The teams\' files come in here. The AI writes the report the central bank expects: what each rule required, what the bank changed, and the proof file for each. You read it, approve it, and send it.',add:'Collect the teams\' files',prep:'Prepare the report',prepping:'Writing the report…',approve:'Approve the report',approved:'Approved by the Compliance Officer',send:'Send to the central bank',sent:'Sent',print:'Print / save as PDF',files:'Files received from the teams',attest:'confirmed by Internal Audit',pending:'waiting for Internal Audit',fp:'fingerprint',
+      rep:{title:'Implementation report',to:'To: Saudi Central Bank · Compliance Supervision',from:'From: Innovation Bank · Compliance Department',subject:'Subject: Implementation of the customer complaints circular (000000000000)',date:'Date',intro:'Innovation Bank confirms that the six rules in the circular were reviewed, the required changes were made, and the proof listed below is attached. Each file carries a digital fingerprint so that it can be verified unchanged.',th:['Rule','What the bank changed','Proof file','Status'],done:'done',na:'no change needed',sign:'Compliance Officer, Innovation Bank',audit:'Reviewed by Internal Audit',note:'Prepared by Taameem from the approved rules and the attached files. Reviewed and approved by a person before sending.'},
+      sentBox:{t:'Report sent',ref:'Reference',when:'Sent on',by:'Sent by the Compliance Officer after approval',sim:'In this prototype sending is simulated. A real submission needs an agreement with the regulator.'}},
+  sp:{kick:'Step 7 · future',title:'What the central bank receives from you',lead:'The regulator does not monitor the bank. It receives only what the bank chooses to send: the report and its proof. It reads it and accepts it when the circular is really implemented. This needs an agreement with the regulator, so it is a future step.',th:[],lock:'The regulator has no access to the bank\'s systems',road:'Future step · shown as a vision only'},
+  simple:{
+    view:{simple:'Simple view',full:'Full view'},next:'Next',prev:'Back',home:'Story',
+    icons:['inbox','sparkles','usercheck','compare','listchecks','fingerprint','send'],
+    who:['sys','ai','hu','ai','ai','hu','rd'],
+    names:['Circular arrives','AI reads it','Person approves','What must change','Tasks per team','Proof collected','Sent to regulator'],
+    what:['Every morning the system checks SAMA, CMA and the Insurance Authority. One circular is new for this bank.','The AI turns the Arabic letter into clear rules: who must do what, by when, with what proof.','Nothing moves until the compliance officer confirms each rule. Less-sure lines are flagged for a person.','Each rule is compared with the bank\'s own policies and systems. Where the bank is not ready, it shows the gap.','For every gap: new policy wording, and one task per team with an owner and a deadline.','The teams send their files. Each is fingerprinted. The AI drafts the report; a person approves and sends it.','The regulator does not watch the bank. It receives only the report the bank chose to send, and accepts it.'],
+    ex:['New SAMA circular on complaints, seen at 09:05','6 rules found, each linked to its Arabic sentence','Officer approves 5, fixes 1. Minutes, not days','Bank policy says 10 days. New rule says 5. Gap found','Operations, IT and Legal each get a task with a deadline','5 proof files sealed with a digital fingerprint','Report sent. Regulator accepts. Done'],
+    press:['Press "Open this circular"','Press "Read the circular"','Press "Confirm all the sure ones", then decide the yellow one','Press "Find what must change"','Press "Write drafts and tasks", then send them','Collect the files, prepare, approve, send','Open the bank\'s report and press "Accept"'],
+    exLabel:'Example',doLabel:'What you press'},
+  toast:{extracted:'6 rules found, each linked to its sentence',approved:'Confirmed',rejected:'Rejected and logged',mapped:'4 things must change inside the bank',drafted:'New wording and 5 tasks written',sent:'Tasks sent to 4 teams',hashed:'File added and fingerprinted',pack:'Proof pack ready · 5 files'}
+ },
+ ar:{brand:'تعميم',roleInst:'المؤسسة',roleSup:'الجهة الرقابية (خارطة طريق)',lang:'English',play:'شغّل القصة',playing:'جارٍ التشغيل…',reset:'إعادة الضبط',
+  nav:['القصة','1 · يصل تعميم جديد','2 · الذكاء يقرأه','3 · إنسان يعتمد','4 · وش لازم يتغيّر','5 · مهمة لكل قسم','6 · الإثبات للجهة الرقابية','7 · ما يستلمه البنك المركزي'],
+  navSt:{todo:'',done:'تم',road:'مستقبلاً'},
+  who:{ai:'الذكاء ينفّذ هذه الخطوة',hu:'إنسان ينفّذ هذه الخطوة',rd:'خطوة مستقبلية'},
+  guide:{
+    0:{what:'يصل تعميم جديد من البنك المركزي إلى بنك الابتكار. اليوم، تحويله إلى تغييرات معتمدة وإثبات يستغرق نحو 42 يوم عمل يدوياً. شاهد التعميم نفسه يمرّ عبر تعميم.',next:'اضغط "شغّل القصة" لتشاهدها تعمل، أو اضغط الخطوة 1.'},
+    1:{what:'كل صباح يفحص النظام مواقع الجهات الرقابية الثلاث ويعرض الجديد. تعميم الشكاوى جديد ويعدّل نسخة أقدم.',next:'افتح التعميم.'},
+    2:{what:'الذكاء يقرأ النص العربي جملة جملة، ويحوّل كل قاعدة إلى سطر واضح: من يجب أن يفعل ماذا، ومتى، وما الإثبات المطلوب. ويقول أيضاً كم هو متأكد.',next:'اضغط "اقرأ التعميم"، ثم اضغط أي سطر لترى الجملة التي جاء منها.'},
+    3:{what:'لا شيء يكمل قبل أن يراجع مسؤول الالتزام قراءة الذكاء. أي سطر كان الذكاء متأكداً منه أقل من 85% يظهر أصفر ويجب أن يفحصه إنسان أولاً.',next:'اعتمد أو ارفض كل سطر. ثم تابع.'},
+    4:{what:'الذكاء يقارن كل قاعدة معتمدة بدليل البنك نفسه: سياساته وضوابطه وأنظمته والشخص المسؤول. حيث لا يكون البنك جاهزاً، يظهر فجوة ومدى خطورتها.',next:'اضغط "اكتشف ما يجب تغييره"، ثم اضغط أي قاعدة لترى سلسلتها.'},
+    5:{what:'لكل فجوة يكتب الذكاء الصياغة الجديدة للسياسة (قبل وبعد) وينشئ مهمة لكل قسم بمالك وموعد. هذه مقترحات؛ الأقسام هي من تعتمدها.',next:'اضغط "اكتب المسودات والمهام"، ثم أرسل المهام.'},
+    6:{what:'الأقسام ترسل ملفاتها: السياسة المعتمدة، محضر الاجتماع، تغيير النظام. الذكاء يكتب التقرير الذي يتوقعه البنك المركزي: سطر لكل قاعدة مع إثباتها. إنسان يقرأه ويعتمده ويرسله.',next:'اجمع الملفات، جهّز التقرير، اقرأه، اعتمده، أرسله.'},
+    7:{what:'جهة البنك المركزي. لا يراقب البنك. يرى فقط التقارير التي اختارت المؤسسات إرسالها. المراجع يفتح التقرير، يقرأه مع إثباتاته، ويعتمده إذا كان التعميم نُفّذ فعلاً. هذا يحتاج اتفاقاً مع الجهة الرقابية، لذلك هو خطوة مستقبلية.',next:'اضغط تقرير بنك الابتكار، اقرأه، ثم اضغط "اعتماد".'}},
+  ov:{kick:'القصة في صفحة واحدة',title:'من التعميم إلى الإثبات',lead:'تعميم واحد واقعي. سبع خطوات. في كل خطوة ترى من يعمل: الذكاء، أم إنسان.',
+      stats:[['1','تعميم يصل'],['6','قواعد وُجدت فيه'],['4','أشياء يجب أن يغيّرها البنك'],['5','ملفات إثبات مختومة']]},
+  steps:[{n:'01',t:'يصل تعميم',s:'النظام يجمعه من موقع الجهة الرقابية',w:'ai'},{n:'02',t:'الذكاء يقرأه',s:'كل جملة تصبح قاعدة واضحة بموعد',w:'ai'},{n:'03',t:'إنسان يعتمد',s:'مسؤول الالتزام يفحص كل قاعدة',w:'hu'},{n:'04',t:'وش لازم يتغيّر',s:'تُقارن القواعد بسياسات البنك وأنظمته',w:'ai'},{n:'05',t:'مهمة لكل قسم',s:'صياغة جديدة، ومهمة لكل قسم',w:'ai'},{n:'06',t:'جمع الإثبات',s:'ملفات تُضاف وتُختم',w:'hu'},{n:'07',t:'ما يستلمه البنك المركزي',s:'فقط ما ترسله أنت. لا يراقبك. مستقبلاً',w:'rd'}],
+  col:{kick:'الخطوة 1 · هذا الصباح 09:05',title:'يصل تعميم جديد',lead:'فحص النظام مواقع الجهات الرقابية الثلاث هذا الصباح. عنصر واحد جديد يخص بنك الابتكار.',open:'افتح هذا التعميم',newTag:'جديد · يحل محل نسخة أقدم',seen:'تمت معالجته',affects:'يخص'},
+  ex:{kick:'الخطوة 2 · الذكاء يقرأه',title:'تحويل التعميم إلى قواعد واضحة',lead:'كل جملة عربية تصبح سطراً واحداً: من يجب أن يفعل ماذا، ومتى، وما الإثبات المطلوب. العمود الأخير يبيّن كم كان الذكاء متأكداً.',run:'اقرأ التعميم',running:'جارٍ القراءة…',done:'اكتملت القراءة',th:['القاعدة','من الجملة','من','يجب / يحظر / يجوز','ما الذي يجب أن يحدث','الموعد (هجري · ميلادي)','الإثبات المطلوب لاحقاً','كم متأكد'],hint:'اضغط أي سطر لتظليل الجملة التي جاء منها.',scan:'خطاب مصوّر · قُرئ بالتعرّف الضوئي'},
+  rv:{kick:'الخطوة 3 · إنسان يقرر',title:'مسؤول الالتزام يفحص كل قاعدة',lead:'الذكاء يقترح فقط. شخص مسمّى يؤكد أن كل قاعدة قُرئت صحيحة. الأسطر الصفراء هي التي كان الذكاء أقل تأكداً منها، فيجب أن ينظر فيها إنسان أولاً.',approve:'صحيحة',reject:'خاطئة',edit:'تعديل',approveAll:'أكّد كل المتأكَّد منها',status:{pending:'بانتظارك',review:'افحص هذه',approved:'مؤكَّدة',rejected:'مرفوضة'},approver:'القرار: مسؤول الالتزام، بنك الابتكار',left:'لم يُقرَّر بعد'},
+  mp:{kick:'الخطوة 4 · مقارنة بدليل البنك نفسه',title:'وش لازم يتغيّر داخل البنك',lead:'كل قاعدة مؤكَّدة تُقارن بسياسات بنك الابتكار وضوابطه وأنظمته ومسؤوليه. حيث لا يكون البنك جاهزاً، ترى فجوة ومدى خطورتها.',run:'اكتشف ما يجب تغييره',running:'جارٍ المقارنة…',gapT:{coverage:'غير مغطّاة بعد',weak:'مغطّاة جزئياً',evidence:'لا يوجد إثبات',timing:'مشكلة موعد',none:'مغطّاة أصلاً'},sev:{high:'خطيرة',medium:'متوسطة',low:'بسيطة',none:'سليم'},rows:['السياسة المتأثرة','الضابط المتأثر','النظام المتأثر','الشخص المسؤول'],why:'السبب',graph:'السلسلة: قاعدة ← سياسة ← ضابط ← نظام ← مسؤول'},
+  dr:{kick:'الخطوة 5 · المسودات والمهام',title:'صياغة جديدة، ومهمة لكل قسم',lead:'لكل فجوة: صياغة السياسة قبل وبعد، ومهمة لكل قسم بمالك وموعد. كل شيء مقترح حتى تعتمده الأقسام.',gen:'اكتب المسودات والمهام',running:'جارٍ الكتابة…',send:'أرسل المهام إلى الأقسام',sent:'أُرسلت · الأقسام تعمل عليها الآن',th:['القسم','المهمة','المالك','الموعد (هجري · ميلادي)','الحالة'],before:'قبل · السياسة الحالية',after:'بعد · الصياغة المقترحة',st:{draft:'مسودة',sent:'مُرسلة',approved:'معتمدة'}},
+  ev:{kick:'الخطوة 6 · التقرير للجهة الرقابية',title:'الذكاء يجهّز التقرير. أنت تراجعه وترسله.',lead:'ملفات الأقسام تصل هنا. الذكاء يكتب التقرير الذي يتوقعه البنك المركزي: ماذا طلبت كل قاعدة، وماذا غيّر البنك، وملف الإثبات لكل واحدة. أنت تقرأه وتعتمده وترسله.',add:'اجمع ملفات الأقسام',prep:'جهّز التقرير',prepping:'جارٍ كتابة التقرير…',approve:'اعتمد التقرير',approved:'اعتمده مسؤول الالتزام',send:'أرسل إلى البنك المركزي',sent:'أُرسل',print:'طباعة / حفظ PDF',files:'الملفات المستلمة من الأقسام',attest:'أكدته المراجعة الداخلية',pending:'بانتظار المراجعة الداخلية',fp:'البصمة',
+      rep:{title:'تقرير تنفيذ التعميم',to:'إلى: البنك المركزي السعودي · الإشراف على الالتزام',from:'من: بنك الابتكار · إدارة الالتزام',subject:'الموضوع: تنفيذ تعميم شكاوى العملاء رقم (000000000000)',date:'التاريخ',intro:'يؤكد بنك الابتكار أن القواعد الست الواردة في التعميم تمت مراجعتها، وأن التغييرات المطلوبة نُفّذت، وأن الإثباتات المذكورة أدناه مرفقة. كل ملف يحمل بصمة رقمية تتيح التحقق من أنه لم يُعدَّل.',th:['القاعدة','ماذا غيّر البنك','ملف الإثبات','الحالة'],done:'منفّذ',na:'لا يحتاج تغييراً',sign:'مسؤول الالتزام، بنك الابتكار',audit:'راجعته المراجعة الداخلية',note:'أعدّه تعميم من القواعد المعتمدة والملفات المرفقة. راجعه واعتمده إنسان قبل الإرسال.'},
+      sentBox:{t:'أُرسل التقرير',ref:'الرقم المرجعي',when:'تاريخ الإرسال',by:'أرسله مسؤول الالتزام بعد الاعتماد',sim:'الإرسال في هذا النموذج محاكاة. الإرسال الفعلي يحتاج اتفاقاً مع الجهة الرقابية.'}},
+  sp:{kick:'الخطوة 7 · مستقبلاً',title:'ما يستلمه البنك المركزي منك',lead:'الجهة الرقابية لا تراقب البنك. تستلم فقط ما يختار البنك إرساله: التقرير وإثباتاته. تقرأه وتعتمده إذا كان التعميم نُفّذ فعلاً. يحتاج اتفاقاً مع الجهة الرقابية، لذلك هو خطوة مستقبلية.',th:[],lock:'الجهة الرقابية لا تصل إلى أنظمة البنك',road:'خطوة مستقبلية · تُعرض كرؤية فقط'},
+  simple:{
+    view:{simple:'عرض مبسّط',full:'العرض الكامل'},next:'التالي',prev:'رجوع',home:'القصة',
+    icons:['inbox','sparkles','usercheck','compare','listchecks','fingerprint','send'],
+    who:['sys','ai','hu','ai','ai','hu','rd'],
+    names:['يصل تعميم','الذكاء يقرأه','إنسان يعتمد','وش لازم يتغيّر','مهمة لكل قسم','جمع الإثبات','الإرسال للجهة'],
+    what:['كل صباح يفحص النظام ساما وهيئة السوق وهيئة التأمين. تعميم واحد جديد يخص هذا البنك.','الذكاء يحوّل الخطاب العربي إلى قواعد واضحة: من يجب أن يفعل ماذا، متى، وبأي إثبات.','لا شيء يتحرك قبل أن يؤكد مسؤول الالتزام كل قاعدة. الأسطر الأقل تأكداً تُعلَّم ليفحصها إنسان.','كل قاعدة تُقارن بسياسات البنك وأنظمته. حيث لا يكون البنك جاهزاً، تظهر الفجوة.','لكل فجوة: صياغة جديدة للسياسة، ومهمة لكل قسم بمالك وموعد.','الأقسام ترسل ملفاتها. كل ملف يُختم ببصمة. الذكاء يكتب التقرير، وإنسان يعتمده ويرسله.','الجهة الرقابية لا تراقب البنك. تستلم فقط التقرير الذي اختار البنك إرساله، وتقبله.'],
+    ex:['تعميم جديد من ساما عن الشكاوى، رُصد الساعة 09:05','وُجدت 6 قواعد، كل واحدة مربوطة بجملتها العربية','الموظف يعتمد 5 ويصحح 1. دقائق مو أيام','سياسة البنك تقول 10 أيام. القاعدة الجديدة تقول 5. انكشفت الفجوة','العمليات وتقنية المعلومات والقانونية، كل قسم له مهمة بموعد','5 ملفات إثبات مختومة ببصمة رقمية','التقرير أُرسل. الجهة قبلت. انتهى'],
+    press:['اضغط "افتح هذا التعميم"','اضغط "اقرأ التعميم"','اضغط "أكّد كل المتأكَّد منها"، ثم قرر السطر الأصفر','اضغط "اكتشف ما يجب تغييره"','اضغط "اكتب المسودات والمهام"، ثم أرسلها','اجمع الملفات، جهّز، اعتمد، أرسل','افتح تقرير البنك واضغط "اعتماد"'],
+    exLabel:'مثال',doLabel:'وش تضغط'},
+  toast:{extracted:'وُجدت 6 قواعد، كل واحدة مربوطة بجملتها',approved:'تم التأكيد',rejected:'رُفضت وسُجّلت',mapped:'4 أشياء يجب أن تتغيّر داخل البنك',drafted:'كُتبت الصياغة الجديدة و5 مهام',sent:'أُرسلت المهام إلى 4 أقسام',hashed:'أُضيف الملف وخُتم',pack:'حزمة الإثبات جاهزة · 5 ملفات'}
+ }
+};
+const CIRC={ref:'تعميم رقم (000000000000) وتاريخ 1447/01/15هـ',refEn:'Circular (000000000000) · 1447/01/15H · illustrative',issuer:'SAMA',subjectAr:'تعليمات معالجة شكاوى العملاء',subjectEn:'Customer complaints handling instructions',
+ clauses:[
+  {id:'م3-أ',ar:'يجب على البنك معالجة شكوى العميل خلال خمسة أيام عمل من تاريخ استلامها.',en:'The bank must resolve a customer complaint within five working days of receipt.'},
+  {id:'م3-ب',ar:'يجب إشعار العميل برقم مرجعي للشكوى فور استلامها.',en:'The customer must be notified of a reference number on receipt.'},
+  {id:'م4',ar:'يحظر إغلاق الشكوى دون إبلاغ العميل بنتيجتها.',en:'A complaint must not be closed without informing the customer of the outcome.'},
+  {id:'م5',ar:'يجوز للبنك تمديد مدة المعالجة إلى عشرة أيام عمل في الحالات المعقدة بعد إشعار العميل.',en:'The bank may extend handling to ten working days in complex cases after notifying the customer.'},
+  {id:'م6',ar:'يجب على البنك رفع تقرير ربع سنوي إلى البنك المركزي يتضمن أعداد الشكاوى ومتوسط مدة المعالجة.',en:'The bank must submit a quarterly report to the central bank with complaint volumes and average handling time.'},
+  {id:'م8',ar:'تسري هذه التعليمات بعد تسعين يوماً من تاريخ صدورها.',en:'These instructions take effect ninety days from issuance.'}]};
+const OBS=[
+ {id:'OB-01',cl:'م3-أ',actor:{en:'Bank',ar:'البنك'},mod:'must',action:{en:'Resolve complaint within 5 working days',ar:'معالجة الشكوى خلال 5 أيام عمل'},cond:{en:'from date of receipt',ar:'من تاريخ الاستلام'},dl:{h:'1447/04/15',g:'2025-10-07'},ev:{en:'SLA report from complaints system',ar:'تقرير مدد من نظام الشكاوى'},conf:.96},
+ {id:'OB-02',cl:'م3-ب',actor:{en:'Bank',ar:'البنك'},mod:'must',action:{en:'Send reference number on receipt',ar:'إرسال رقم مرجعي فور الاستلام'},cond:{en:'immediately',ar:'فوراً'},dl:{h:'1447/04/15',g:'2025-10-07'},ev:{en:'SMS log sample',ar:'عيّنة سجل الرسائل'},conf:.91},
+ {id:'OB-03',cl:'م4',actor:{en:'Bank',ar:'البنك'},mod:'must_not',action:{en:'Close a complaint without informing the customer',ar:'إغلاق الشكوى دون إبلاغ العميل'},cond:{en:'always',ar:'دائماً'},dl:{h:'1447/04/15',g:'2025-10-07'},ev:{en:'System rule + closure audit trail',ar:'قاعدة في النظام + سجل الإغلاق'},conf:.78},
+ {id:'OB-04',cl:'م5',actor:{en:'Bank',ar:'البنك'},mod:'may',action:{en:'Extend handling to 10 working days',ar:'تمديد المعالجة إلى 10 أيام عمل'},cond:{en:'complex cases, after notifying customer',ar:'الحالات المعقدة بعد إشعار العميل'},dl:{h:'—',g:'—'},ev:{en:'Extension log with notification',ar:'سجل التمديد مع الإشعار'},conf:.89},
+ {id:'OB-05',cl:'م6',actor:{en:'Bank',ar:'البنك'},mod:'must',action:{en:'Quarterly report: volumes and average duration',ar:'تقرير ربع سنوي: الأعداد ومتوسط المدة'},cond:{en:'every quarter',ar:'كل ربع سنة'},dl:{h:'1447/06/30',g:'2025-12-21'},ev:{en:'Submitted report copy',ar:'نسخة التقرير المرفوع'},conf:.93},
+ {id:'OB-06',cl:'م8',actor:{en:'All',ar:'الجميع'},mod:'must',action:{en:'Comply within 90 days of issuance',ar:'الالتزام خلال 90 يوماً من الإصدار'},cond:{en:'—',ar:'—'},dl:{h:'1447/04/15',g:'2025-10-07'},ev:{en:'Approval dates',ar:'تواريخ الاعتماد'},conf:.97}];
+const MAP={
+ 'OB-01':{policy:{en:'Complaints Policy v3.1 · clause 6 says 10 working days',ar:'سياسة الشكاوى v3.1 · البند 6 يقول 10 أيام عمل'},control:{en:'C-17 · closure needs supervisor approval',ar:'C-17 · الإغلاق يحتاج موافقة مشرف'},system:{en:'Complaints system · no SLA timer',ar:'نظام الشكاوى · لا يوجد عدّاد مهلة'},owner:{en:'Head of Operations',ar:'مدير العمليات'},gap:'coverage',sev:'high',why:{en:'Policy allows 10 days; circular requires 5. No timer exists to enforce it.',ar:'السياسة تسمح بـ10 أيام والتعميم يطلب 5. لا يوجد عدّاد يفرضها.'}},
+ 'OB-02':{policy:{en:'Customer Communication Policy v2.0 · clause 3',ar:'سياسة التواصل مع العملاء v2.0 · البند 3'},control:{en:'C-22 · SMS on ticket creation',ar:'C-22 · رسالة عند إنشاء التذكرة'},system:{en:'SMS gateway · template lacks reference number',ar:'بوابة الرسائل · القالب بلا رقم مرجعي'},owner:{en:'Head of IT',ar:'مدير تقنية المعلومات'},gap:'weak',sev:'medium',why:{en:'An SMS is sent, but it does not carry the complaint reference number.',ar:'تُرسل رسالة لكنها لا تحمل الرقم المرجعي للشكوى.'}},
+ 'OB-03':{policy:{en:'Complaints Policy v3.1 · clause 9',ar:'سياسة الشكاوى v3.1 · البند 9'},control:{en:'C-17 · closure needs supervisor approval',ar:'C-17 · الإغلاق يحتاج موافقة مشرف'},system:{en:'Complaints system · closure screen',ar:'نظام الشكاوى · شاشة الإغلاق'},owner:{en:'Head of Operations',ar:'مدير العمليات'},gap:'weak',sev:'high',why:{en:'Supervisor approval exists; customer notification before closure is not enforced.',ar:'موافقة المشرف موجودة؛ إبلاغ العميل قبل الإغلاق غير مفروض.'}},
+ 'OB-04':{policy:{en:'Complaints Policy v3.1 · clause 7',ar:'سياسة الشكاوى v3.1 · البند 7'},control:{en:'C-19 · extension requires reason code',ar:'C-19 · التمديد يتطلب رمز سبب'},system:{en:'Complaints system · extension log',ar:'نظام الشكاوى · سجل التمديد'},owner:{en:'Head of Operations',ar:'مدير العمليات'},gap:'none',sev:'none',why:{en:'Already covered by clause 7 and control C-19.',ar:'مغطّى بالبند 7 والضابط C-19.'}},
+ 'OB-05':{policy:{en:'Regulatory Reporting Policy v1.4',ar:'سياسة التقارير الرقابية v1.4'},control:{en:'C-31 · quarterly regulatory returns',ar:'C-31 · التقارير الرقابية الربعية'},system:{en:'Reporting warehouse · no complaints dataset',ar:'مستودع التقارير · لا توجد بيانات شكاوى'},owner:{en:'Head of Compliance',ar:'مدير الالتزام'},gap:'coverage',sev:'medium',why:{en:'Quarterly returns exist, but the complaints dataset is not in the warehouse.',ar:'التقارير الربعية موجودة لكن بيانات الشكاوى ليست في المستودع.'}},
+ 'OB-06':{policy:{en:'All affected policies',ar:'كل السياسات المتأثرة'},control:{en:'Compliance calendar',ar:'تقويم الالتزام'},system:{en:'GRC tracker',ar:'متتبع الالتزام'},owner:{en:'Head of Compliance',ar:'مدير الالتزام'},gap:'timing',sev:'medium',why:{en:'90-day deadline overlaps with the IT change freeze in month two.',ar:'مهلة الـ90 يوماً تتداخل مع تجميد التغييرات التقنية في الشهر الثاني.'}}};
+const PLAIN={
+ 'OB-01':{rule:{en:'Answer every customer complaint within 5 working days.',ar:'الرد على كل شكوى عميل خلال 5 أيام عمل.'},today:{en:'The bank\'s own policy allows 10 working days, and the complaints system has no timer that counts the days.',ar:'سياسة البنك الحالية تسمح بـ10 أيام عمل، ونظام الشكاوى ما فيه عدّاد يحسب الأيام.'},change:{en:['Change the policy: 10 days becomes 5 days','Add a day counter to the complaints system'],ar:['تعديل السياسة: 10 أيام تصير 5 أيام','إضافة عدّاد أيام في نظام الشكاوى']},who:{en:'Head of Operations, with IT',ar:'مدير العمليات، مع تقنية المعلومات'}},
+ 'OB-02':{rule:{en:'Send the customer a complaint number as soon as the complaint is received.',ar:'إرسال رقم الشكوى للعميل فور استلامها.'},today:{en:'The bank already sends an SMS, but the message does not include the complaint number.',ar:'البنك يرسل رسالة نصية فعلاً، لكن الرسالة ما فيها رقم الشكوى.'},change:{en:['Add the complaint number to the SMS text'],ar:['إضافة رقم الشكوى إلى نص الرسالة']},who:{en:'Head of IT',ar:'مدير تقنية المعلومات'}},
+ 'OB-03':{rule:{en:'A complaint may not be closed before the customer is told the result.',ar:'لا يجوز إغلاق الشكوى قبل إبلاغ العميل بالنتيجة.'},today:{en:'Closing needs a supervisor\'s approval, but nothing checks that the customer was told first.',ar:'الإغلاق يحتاج موافقة مشرف، لكن ما فيه شي يتأكد إن العميل أُبلغ أولاً.'},change:{en:['Block the close button until "customer informed" is ticked','Update the staff procedure and retrain'],ar:['قفل زر الإغلاق حتى يُعلَّم "تم إبلاغ العميل"','تحديث إجراء الموظفين وإعادة التدريب']},who:{en:'Head of Operations',ar:'مدير العمليات'}},
+ 'OB-04':{rule:{en:'The bank may take up to 10 days for complex cases, if it tells the customer.',ar:'يجوز للبنك أخذ 10 أيام في الحالات المعقدة، إذا أبلغ العميل.'},today:{en:'The bank already has this rule and a reason code for extensions.',ar:'البنك عنده هذه القاعدة أصلاً ورمز سبب للتمديد.'},change:{en:['Nothing. Already in place.'],ar:['لا شيء. موجود أصلاً.']},who:{en:'—',ar:'—'}},
+ 'OB-05':{rule:{en:'Send the central bank a report every three months: how many complaints, and how long they took.',ar:'إرسال تقرير للبنك المركزي كل ثلاثة أشهر: كم شكوى، وكم استغرقت.'},today:{en:'The bank sends other quarterly reports, but complaint numbers are not collected in the reporting system.',ar:'البنك يرسل تقارير ربعية أخرى، لكن أرقام الشكاوى غير مجموعة في نظام التقارير.'},change:{en:['Add complaint data to the reporting system','Create the quarterly report'],ar:['إضافة بيانات الشكاوى إلى نظام التقارير','إنشاء التقرير الربعي']},who:{en:'Head of Compliance',ar:'مدير الالتزام'}},
+ 'OB-06':{rule:{en:'Everything must be in place within 90 days.',ar:'كل شيء يجب أن يكون جاهزاً خلال 90 يوماً.'},today:{en:'Possible, but the IT department freezes system changes in month two.',ar:'ممكن، لكن قسم تقنية المعلومات يجمّد تغييرات الأنظمة في الشهر الثاني.'},change:{en:['Finish the system changes before the freeze'],ar:['إنهاء تغييرات الأنظمة قبل التجميد']},who:{en:'Head of Compliance',ar:'مدير الالتزام'}}};
+const DRAFT={before:{ar:'البند 6: يلتزم البنك بمعالجة شكاوى العملاء خلال مدة لا تتجاوز عشرة أيام عمل من تاريخ الاستلام.',en:'Clause 6: The bank handles customer complaints within no more than ten working days of receipt.'},
+ after:{ar:'البند 6: يلتزم البنك بمعالجة شكاوى العملاء خلال مدة لا تتجاوز خمسة أيام عمل من تاريخ الاستلام، مع إشعار العميل برقم الشكوى فور استلامها، وإبلاغه بالنتيجة قبل الإغلاق.',en:'Clause 6: The bank handles customer complaints within no more than five working days of receipt, notifies the customer of the complaint number on receipt, and informs them of the outcome before closure.'}};
+const TASKS=[
+ {dept:{en:'Legal',ar:'القانوني'},task:{en:'Amend clause 6 of the Complaints Policy and the customer T&Cs',ar:'تعديل البند 6 من سياسة الشكاوى والشروط والأحكام'},owner:{en:'Head of Legal',ar:'مدير الشؤون القانونية'},due:'1447/02/30 · 2025-08-24',ob:'OB-01'},
+ {dept:{en:'IT',ar:'تقنية المعلومات'},task:{en:'Add 5-day SLA timer and closure rule in the complaints system',ar:'إضافة عدّاد 5 أيام وقاعدة الإغلاق في نظام الشكاوى'},owner:{en:'Head of IT',ar:'مدير تقنية المعلومات'},due:'1447/03/20 · 2025-09-12',ob:'OB-01'},
+ {dept:{en:'IT',ar:'تقنية المعلومات'},task:{en:'Add the reference number to the SMS template',ar:'إضافة الرقم المرجعي إلى قالب الرسائل'},owner:{en:'Head of IT',ar:'مدير تقنية المعلومات'},due:'1447/03/05 · 2025-08-28',ob:'OB-02'},
+ {dept:{en:'Operations',ar:'العمليات'},task:{en:'Update the complaints procedure and retrain 120 agents',ar:'تحديث إجراء الشكاوى وتدريب 120 موظفاً'},owner:{en:'Head of Operations',ar:'مدير العمليات'},due:'1447/03/28 · 2025-09-20',ob:'OB-03'},
+ {dept:{en:'Compliance',ar:'الالتزام'},task:{en:'Build the quarterly complaints report from the warehouse',ar:'بناء تقرير الشكاوى الربعي من المستودع'},owner:{en:'Head of Compliance',ar:'مدير الالتزام'},due:'1447/04/10 · 2025-10-02',ob:'OB-05'}];
+const EVID=[
+ {name:'Complaints Policy v4.0.pdf',type:'PDF',ob:'OB-01',col:'2025-08-20',exp:'2026-08-20',attested:true},
+ {name:'Compliance Committee minutes (scan).pdf',type:'SCAN',ob:'OB-01',col:'2025-08-24',exp:'2026-08-24',attested:true},
+ {name:'Change ticket CR-2026-441.png',type:'IMG',ob:'OB-01',col:'2025-09-12',exp:'2026-03-12',attested:true},
+ {name:'SMS log sample Sep-2025.csv',type:'CSV',ob:'OB-02',col:'2025-09-14',exp:'2025-12-14',attested:false},
+ {name:'Training attendance (scan).pdf',type:'SCAN',ob:'OB-03',col:'2025-09-20',exp:'2026-09-20',attested:true}];
+const INBOX=[
+ {src:'sama',t:{en:'Customer complaints handling instructions · v2',ar:'تعليمات معالجة شكاوى العملاء · النسخة 2'},d:'09:05',aff:{en:'banks, finance companies',ar:'البنوك، شركات التمويل'},isNew:true},
+ {src:'cma',t:{en:'Amendment to the Market Conduct Regulations',ar:'تعديل لائحة سلوكيات السوق'},d:'08:40',aff:{en:'capital market institutions',ar:'مؤسسات السوق المالية'}},
+ {src:'ia',t:{en:'Motor insurance claims settlement circular',ar:'تعميم تسوية مطالبات تأمين المركبات'},d:'08:12',aff:{en:'insurers',ar:'شركات التأمين'}},
+ {src:'sama',t:{en:'Open banking service providers: reporting template',ar:'مزودو الخدمات المصرفية المفتوحة: نموذج التقارير'},d:'Yesterday',aff:{en:'payment companies',ar:'شركات المدفوعات'}},
+ {src:'cma',t:{en:'Draft: AML guidelines for CMIs (Istitlaa)',ar:'مسودة: إرشادات مكافحة غسل الأموال (استطلاع)'},d:'Yesterday',aff:{en:'capital market institutions',ar:'مؤسسات السوق المالية'}}];
+const SUP=[
+ {n:{en:'Innovation Bank (demo)',ar:'بنك الابتكار (تجريبي)'},tot:6,done:4,prog:1,late:0,upd:'2025-09-21',hash:'a9f3…e21c'},
+ {n:{en:'Riyadh Capital Co.',ar:'شركة الرياض المالية'},tot:6,done:2,prog:3,late:1,upd:'2025-09-18',hash:'7c1d…40b9'},
+ {n:{en:'Gulf Insurance',ar:'الخليج للتأمين'},tot:6,done:0,prog:2,late:2,upd:'2025-09-10',hash:'—'}];
+/* ================= helpers ================= */
+async function sha256(s){ const b=new TextEncoder().encode(s); const d=await crypto.subtle.digest('SHA-256',b); return [...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
+const useLang=()=>{ const [lang,setLang]=useState(()=>{const q=new URLSearchParams(location.search).get('lang'); if(q==='ar'||q==='en') return q; try{return localStorage.getItem('tm.lang')||'en'}catch(e){return 'en'}}); useEffect(()=>{document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';try{localStorage.setItem('tm.lang',lang)}catch(e){}},[lang]); return [lang,setLang]; };
+const L=(o,lang)=>typeof o==='string'?o:(o?o[lang]:'');
+function Toast({msg}){ return msg? h('div',{className:'toast'},h('span',{style:{width:8,height:8,borderRadius:'50%',background:'var(--teal)'}}),msg):null; }
+function Count({to}){ const [v,setV]=useState(0); useEffect(()=>{ const n=parseFloat(String(to).replace(/[^\d.]/g,''))||0; if(!n){setV(to);return;} const t0=performance.now(); let raf; const tick=now=>{ const p=Math.min(1,(now-t0)/900); const e=1-Math.pow(1-p,3); setV(Math.round(n*e)); if(p<1) raf=requestAnimationFrame(tick); else setV(to); }; raf=requestAnimationFrame(tick); return ()=>cancelAnimationFrame(raf); },[to]); return h('b',null,v); }
+function Bell({notes,open,setOpen,lang}){ const unread=notes.filter(n=>!n.read).length; const fmt=d=>d.toLocaleTimeString(lang==='ar'?'ar-SA':'en-GB',{hour:'2-digit',minute:'2-digit'});
+  return h(React.Fragment,null, h('button',{className:'ibtn',onClick:()=>setOpen(!open),'aria-label':'notifications'},I('bell'),unread?h('span',{className:'badge'},unread):null),
+    open?h('div',{className:'npanel'},h('h4',null,lang==='ar'?'الإشعارات':'Notifications',h('button',{className:'btn sm ghost',onClick:()=>setOpen(false)},I('x'))), notes.length===0?h('div',{className:'nitem'},h('i'),h('span',{style:{color:'var(--muted)'}},lang==='ar'?'لا إشعارات بعد':'No notifications yet')):
+      [...notes].reverse().map((n,i)=>h('div',{key:i,className:`nitem ${n.read?'':'unread'}`},h('i'),h('div',null,n.t,h('small',null,fmt(n.at)))))):null); }
+function Processing({lines,onDone,lang}){ const [i,setI]=useState(0); useEffect(()=>{ if(i>=lines.length){ onDone&&onDone(); return; } const t=setTimeout(()=>setI(i+1),420); return ()=>clearTimeout(t); },[i]);
+  return h('div',{className:'log fade'}, lines.slice(0,i).map((l,k)=>h('div',{key:k,className:l.c||''},'› ',l.t)), h('div',{className:'prog'},h('i',{style:{width:Math.round(i/lines.length*100)+'%'}})), i<lines.length?h('span',{className:'dim'},lang==='ar'?'…':'…'):null); }
+function Head({kick,title,lead,right}){ return h('div',{className:'h'},h('div',null,h('div',{className:'kick'},kick),h('h1',null,title),lead?h('p',null,lead):null),right?h('div',{style:{display:'flex',gap:'.5rem',flexWrap:'wrap'}},right):null); }
+function ModeSwitch({S,n,lang}){ const m=S.mode[n]||'ai'; const ar=lang==='ar';
+  return h('div',{className:'mode'},h('button',{className:m==='ai'?'on':'',onClick:()=>S.setMode(n,'ai')},I('sparkles'),ar?'بالذكاء الاصطناعي':'with the AI'),h('button',{className:m==='hu'?'on':'',onClick:()=>S.setMode(n,'hu')},I('hand'),ar?'يدوياً':'manually')); }
+function Guide({n,lang,w,S}){ const t=T[lang]; const g=t.guide[n]; if(!g) return null; if(((S&&S.simple)||window.__tmSimple)&&n) return h(SimpleGuide,{n,lang}); const manual=S&&S.mode&&S.mode[n]==='hu'; const who=manual?(lang==='ar'?'إنسان ينفّذ هذه الخطوة يدوياً':'A person does this step manually'):(w?t.who[w]:(lang==='ar'?'القصة كاملة':'The whole story'));
+  return h('div',{className:'guide fade'},h('div',{className:'gw'},h('span',{className:`who ${manual?'hu':(w||'hu')}`},who)),h('div',{className:'gt'},h('b',null,lang==='ar'?'وش يصير هنا':'What happens here'),h('span',null,g.what)),h('div',{className:'gt next'},h('b',null,lang==='ar'?'وش تسوي أنت':'What you do'),h('span',null,g.next))); }
+function Strip({screen,done,go,lang,role}){ const t=T[lang].simple;
+  return h('div',{className:'strip'},
+    h('button',{className:'home',onClick:()=>go(0)},h('span',{className:'c'},I('home')),t.home),
+    t.names.map((nm,i)=>{ const n=i+1; const on=screen===n&&(n===7?role==='sup':role==='inst'); return h('button',{key:n,className:`step ${on?'on':''} ${done[n]?'done':''}`,onClick:()=>go(n)},
+      h('span',{className:'c '+t.who[i]},done[n]?I('check'):I(t.icons[i])),h('span',{className:'n'},n),h('span',{className:'t'},nm)); })); }
+function SimpleGuide({n,lang}){ const t=T[lang].simple; if(!n) return null; const i=n-1;
+  return h('div',{className:'sguide fade'},h('span',{className:'who '+T[lang].simple.who[i]},T[lang].who[t.who[i]==='sys'?'ai':t.who[i]]),
+    h('div',null,h('div',{className:'big'},t.what[i]),h('div',{className:'ex'},h('b',null,t.exLabel),h('span',null,t.ex[i]))),
+    h('div',{className:'do'},h('b',null,t.doLabel),t.press[i])); }
+function Doc({lang,hl,dim}){ return h('div',{className:'doc'}, h('span',{className:'stamp'},'SCAN · OCR 0.98'), h('span',{className:'ref'},CIRC.refEn), h('div',{style:{fontWeight:700,marginBottom:'.4rem'}},CIRC.subjectAr), CIRC.clauses.map(c=>h('div',{key:c.id},h('span',{className:`cl ${hl===c.id?'hl':''} ${dim&&hl&&hl!==c.id?'dim':''}`},h('b',{style:{color:'var(--green2)',marginInlineStart:6}},c.id,' — '),c.ar)))); }
+/* ================= screens ================= */
+function Overview({S,lang,go}){ const t=T[lang]; const ar=lang==='ar'; const done=[true,S.extracted,S.reviewed,S.mapped,S.sent,S.pack,false];
+  const O=ar?{
+    kick:'القصة كاملة في صفحة واحدة',title:'تعميم يصل إلى البنك. كيف يتحوّل إلى تنفيذ وإثبات؟',
+    lead:'هذه الصفحة تشرح كل شيء. اقرأها من الأعلى للأسفل، ثم اضغط "شغّل القصة" لتشاهد الخطوات تعمل.',
+    what:{t:'وش هو التعميم؟',x:'ورقة رسمية من الجهة الرقابية (مثل البنك المركزي) تقول للبنوك: "عليكم أن تفعلوا كذا خلال مدة كذا". تصل كملف PDF أو خطاب مصوّر، وبالعربي.'},
+    today:{t:'اليوم · يدوياً',n:'42',u:'يوم عمل للتعميم الواحد',items:['موظف يقرأ التعميم ويعلّم على "يجب" و"يحظر" بالقلم','يفتح إكسل ويكتب كل قاعدة بيده','يسأل زملاءه: أي سياسة وأي نظام يتأثر؟ (أسبوعان)','يطارد الأقسام بالإيميل','يجمع الأدلة من الإيميلات والمجلدات لما تطلبها الجهة الرقابية']},
+    after:{t:'مع تعميم',n:'8',u:'أيام عمل، والباقي انتظار الأقسام',items:['الذكاء يقرأ التعميم ويحوّله إلى قواعد واضحة في دقائق','إنسان يراجع ويعتمد كل قاعدة','الذكاء يقارنها بسياسات البنك نفسه ويقول وش لازم يتغيّر','مهمة لكل قسم بمالك وموعد','تقرير جاهز بالإثباتات، تراجعه وترسله أنت']},
+    stepsT:'الخطوات السبع',stepsL:'كل خطوة يمكن أن ينفّذها الذكاء الاصطناعي، أو ينفّذها إنسان يدوياً. وفي كل الأحوال، لا يُعتمد شيء إلا بقرار إنسان.',
+    modes:{ai:'يقدر الذكاء يسويها',hu:'ويقدر الإنسان يسويها يدوياً',dec:'القرار دائماً لإنسان'},
+    priv:{t:'الخصوصية: أنت ترسل، وهم يستلمون',x:'الجهة الرقابية لا تراقب البنك ولا تدخل أنظمته أبداً. البنك هو الذي يقرر متى يرسل تقريره وإثباتاته، والجهة تستلم فقط ما أُرسل لها وتعتمده. لا بيانات عملاء، لا أنظمة داخلية، لا نص سياسات.'},
+    never:{t:'ما لا يفعله الذكاء أبداً',items:['لا يعتمد قاعدة أو يغلق فجوة بنفسه','لا يعدّل أي نظام إنتاجي','لا يوقّع أو يشهد نيابة عن شخص','لا يرسل شيئاً إلى جهة رقابية تلقائياً']},
+    demo:'بنك الابتكار بنك تجريبي، وخريطته الداخلية مُهيّأة للعرض. التعميم توضيحي والآلية حقيقية.'
+  }:{
+    kick:'The whole story on one page',title:'A circular reaches the bank. How does it become action and proof?',
+    lead:'This page explains everything. Read it top to bottom, then press "Play the story" to watch the steps run.',
+    what:{t:'What is a circular?',x:'An official letter from a regulator (such as the central bank) telling banks: "you must do this within this period". It arrives as a PDF or a scanned letter, in Arabic.'},
+    today:{t:'Today · by hand',n:'42',u:'working days per circular',items:['An officer reads the circular and highlights every "must" and "must not"','Types each rule into Excel by hand','Asks colleagues which policy and which system are affected (two weeks)','Chases departments by email','Collects proof from emails and folders when the regulator asks']},
+    after:{t:'With Taameem',n:'8',u:'working days, the rest is waiting for teams',items:['The AI reads the circular and turns it into clear rules in minutes','A person reviews and confirms each rule','The AI compares them with the bank\'s own policies and says what must change','One task per team, with an owner and a deadline','A report with the proof, ready for you to review and send']},
+    stepsT:'The seven steps',stepsL:'Every step can be done by the AI, or by a person manually. Either way, nothing counts until a person approves it.',
+    modes:{ai:'The AI can do it',hu:'A person can do it manually',dec:'The decision is always a person\'s'},
+    priv:{t:'Privacy: you send, they receive',x:'The regulator never monitors the bank and never enters its systems. The bank decides when to send its report and proof; the regulator only receives what was sent and accepts it. No customer data, no internal systems, no policy text.'},
+    never:{t:'What the AI never does',items:['Never confirms a rule or closes a gap by itself','Never changes a production system','Never signs or attests for a person','Never sends anything to a regulator automatically']},
+    demo:'Innovation Bank is a demo bank with a seeded internal map. The circular is illustrative; the mechanism is real.'
+  };
+  const Box=({title,children,cls,style})=>h('div',{className:`card ${cls||''}`,style},h('h3',null,title),children);
+  return h('div',{className:'fade'}, h(Head,{kick:O.kick,title:O.title,lead:O.lead,right:[h('button',{key:'p',className:'btn pri',onClick:S.play,disabled:S.playing},S.playing?t.playing:[I('play'),' '+t.play]),h('button',{key:'r',className:'btn',onClick:S.reset},t.reset)]}),
+    h('div',{className:'grid stagger',style:{gridTemplateColumns:'1fr 1fr 1fr',marginBottom:'1rem'}},
+      h(Box,{title:O.what.t},h('p',{style:{margin:0,color:'var(--ink2)',lineHeight:1.7}},O.what.x),h('div',{style:{marginTop:'.7rem'}},h(Doc,{lang}))),
+      h('div',{className:'card',style:{borderTop:'4px solid var(--coral)'}},h('div',{className:'kick',style:{color:'var(--coral)'}},O.today.t),h('div',{style:{display:'flex',alignItems:'baseline',gap:'.5rem',margin:'.4rem 0 .5rem'}},h('b',{className:'mono',style:{fontSize:'2.4rem',color:'var(--coral)',lineHeight:1}},O.today.n),h('span',{style:{color:'var(--ink2)'}},O.today.u)),h('ol',{style:{margin:0,paddingInlineStart:'1.1rem',color:'var(--ink2)',lineHeight:1.7,fontSize:'.9rem'}},O.today.items.map((x,i)=>h('li',{key:i},x)))),
+      h('div',{className:'card',style:{borderTop:'4px solid var(--green)'}},h('div',{className:'kick'},O.after.t),h('div',{style:{display:'flex',alignItems:'baseline',gap:'.5rem',margin:'.4rem 0 .5rem'}},h('b',{className:'mono',style:{fontSize:'2.4rem',color:'var(--green2)',lineHeight:1}},O.after.n),h('span',{style:{color:'var(--ink2)'}},O.after.u)),h('ol',{style:{margin:0,paddingInlineStart:'1.1rem',color:'var(--ink2)',lineHeight:1.7,fontSize:'.9rem'}},O.after.items.map((x,i)=>h('li',{key:i},x))))),
+    h('div',{className:'card',style:{marginBottom:'1rem'}},h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'.6rem',marginBottom:'.6rem'}},h('h3',{style:{margin:0}},O.stepsT),h('div',{style:{display:'flex',gap:'.5rem',flexWrap:'wrap'}},h('span',{className:'who ai',style:{padding:'.2rem .6rem',borderRadius:999,fontSize:'.74rem',fontWeight:700}},I('sparkles'),' AI · ',O.modes.ai),h('span',{className:'who hu',style:{padding:'.2rem .6rem',borderRadius:999,fontSize:'.74rem',fontWeight:700}},I('hand'),' · ',O.modes.hu),h('span',{className:'pill gold'},I('check'),' ',O.modes.dec))),h('p',{style:{margin:'0 0 .8rem',color:'var(--ink2)'}},O.stepsL),
+      h('div',{className:'steps stagger'}, t.steps.map((s,i)=>h('div',{key:i,className:`stp ${done[i]?'done':''} ${S.screen===i+1?'cur':''} ${s.w==='rd'?'road':''}`,onClick:()=>go(i+1)},h('span',{className:`who ${s.w}`},s.w==='ai'?['AI + ',I('hand')]:s.w==='hu'?(ar?'إنسان':'Human'):(ar?'مستقبلاً':'Future')),h('span',{className:'n'},s.n),h('b',null,s.t),h('small',null,s.s))))),
+    h('div',{className:'grid g2 stagger'},
+      h('div',{className:'card',style:{borderInlineStart:'5px solid var(--green)'}},h('h3',null,I('lock'),' ',O.priv.t),h('p',{style:{margin:0,color:'var(--ink2)',lineHeight:1.7}},O.priv.x)),
+      h('div',{className:'card',style:{borderInlineStart:'5px solid var(--coral)'}},h('h3',null,O.never.t),h('ul',{style:{margin:0,paddingInlineStart:'1.1rem',color:'var(--ink2)',lineHeight:1.9}},O.never.items.map((x,i)=>h('li',{key:i},x))),h('div',{className:'sup',style:{marginTop:'.8rem'}},I('info'),' ',O.demo)))); }
+function Collector({S,lang,go}){ const t=T[lang];
+  return h('div',{className:'fade'}, h(Head,{kick:t.col.kick,title:t.col.title,lead:t.col.lead}), h(Guide,{n:1,lang,w:'ai'}),
+    h('div',{className:'grid g3',style:{marginBottom:'1rem'}},[['SAMA',2,'sama'],['CMA',2,'cma'],['IA',1,'ia']].map(([n,c,cls])=>h('div',{key:n,className:'card',style:{display:'flex',gap:'.8rem',alignItems:'center'}},h('span',{className:`src ${cls}`,style:{width:38,height:38,borderRadius:9,display:'grid',placeItems:'center',color:'#fff',fontFamily:'"IBM Plex Mono",monospace',fontSize:'.66rem',fontWeight:700}},n),h('div',null,h('b',null,c,' ',lang==='ar'?'إصدار اليوم':'today'),h('div',{style:{fontSize:'.76rem',color:'var(--muted)'}},lang==='ar'?'آخر سحب 09:05':'last pull 09:05'))))),
+    h('div',{className:'inbox'}, INBOX.map((m,i)=>h('div',{key:i,className:`msg ${m.isNew?'new':''}`},h('span',{className:`src ${m.src}`},m.src.toUpperCase()),h('div',null,h('b',null,L(m.t,lang),' ',m.isNew?h('span',{className:'pill green'},t.col.newTag):h('span',{className:'pill grey'},t.col.seen)),h('small',null,m.d,' · ',t.col.affects,': ',L(m.aff,lang))),m.isNew?h('button',{className:'btn pri sm',onClick:()=>go(2)},t.col.open,' →'):h('span',{className:'pill grey'},'v1'))))); }
+function Extract({S,lang,go}){ const t=T[lang]; const [hl,setHl]=useState(null);
+  const lines=[{t:'source: rulebook.sama.gov.sa · fetched 09:05 · 3 pages (2 scanned)',c:'dim'},{t:'OCR page 1/3 … confidence 0.98',c:'ok'},{t:'OCR page 2/3 … confidence 0.97',c:'ok'},{t:'OCR page 3/3 … confidence 0.91 (stamp overlaps text)',c:'warn'},{t:'normalising alef / ta-marbuta / digits'},{t:'splitting on مادة / بند / فقرة → 6 clauses',c:'ok'},{t:'modality lexicon: يجب ×4 · يحظر ×1 · يجوز ×1'},{t:'Hijri → Gregorian: 1447/01/15 + 90 days = 1447/04/15',c:'ok'},{t:'6 obligations · 1 below 0.85 → review queue',c:'ok'}];
+  const manual=S.mode[2]==='hu';
+  return h('div',{className:'fade'}, h(Head,{kick:t.ex.kick,title:t.ex.title,lead:t.ex.lead,right:[h(ModeSwitch,{key:'m',S,n:2,lang}),h('button',{key:'r',className:'btn pri',disabled:S.extracting||S.extracted,onClick:()=>manual?S.extractDone(true):S.extract()},S.extracting?t.ex.running:S.extracted?[I('check'),' '+t.ex.done]:(manual?[I('hand'),' '+(lang==='ar'?'أدخل القواعد يدوياً':'Enter the rules manually')]:[I('zap'),' '+t.ex.run]))]}), h(Guide,{n:2,lang,w:'ai',S}),
+    h('div',{style:{display:'grid',gridTemplateColumns:'400px 1fr',gap:'1rem',alignItems:'start'}},
+      h('div',{className:'card'},h('div',{className:'kick',style:{marginBottom:'.6rem'}},t.ex.scan),h(Doc,{lang,hl,dim:true})),
+      h('div',null, S.extracting?h(Processing,{lines,lang,onDone:S.extractDone}):null,
+        S.extracted?h('div',{className:'card fade',style:{marginTop:S.extracting?'1rem':0}},h('div',{style:{fontSize:'.76rem',color:'var(--muted)',marginBottom:'.5rem',display:'flex',justifyContent:'space-between',gap:'.5rem',flexWrap:'wrap'}},h('span',null,t.ex.hint),S.manualBy?h('span',{className:'pill navy'},I('hand'),' ',lang==='ar'?'أُدخلت يدوياً بواسطة مسؤول الالتزام':'Entered manually by the Compliance Officer'):h('span',{className:'pill green'},'AI · ',lang==='ar'?'استخرجها الذكاء، بانتظار مراجعة إنسان':'extracted by the AI, awaiting a person\'s review')),
+          h('table',{style:{tableLayout:'fixed'}},h('colgroup',null,[52,62,88,null,110,null,64].map((w,i)=>h('col',{key:i,style:w?{width:w}:{}}))),h('thead',null,h('tr',null,[t.ex.th[0],t.ex.th[1],t.ex.th[3],t.ex.th[4],t.ex.th[5],t.ex.th[6],t.ex.th[7]].map((x,i)=>h('th',{key:i,style:{whiteSpace:'normal',lineHeight:1.2}},x)))),h('tbody',null,OBS.map(o=>h('tr',{key:o.id,className:`click ${hl===o.cl?'sel':''}`,onClick:()=>setHl(o.cl)},h('td',{className:'mono',style:{fontSize:'.74rem'}},o.id),h('td',{className:'ar',style:{textAlign:'start'}},o.cl),h('td',null,h('span',{className:`mod ${o.mod}`},o.mod==='must'?(lang==='ar'?'يجب':'must'):o.mod==='must_not'?(lang==='ar'?'يحظر':'must not'):(lang==='ar'?'يجوز':'may'))),h('td',null,L(o.action,lang),h('div',{style:{fontSize:'.72rem',color:'var(--muted)'}},L(o.cond,lang))),h('td',{className:'mono',style:{fontSize:'.72rem'}},o.dl.h,h('br'),o.dl.g),h('td',{style:{fontSize:'.78rem',color:'var(--ink2)'}},L(o.ev,lang)),h('td',null,h('span',{className:`conf ${o.conf<.85?'low':''}`},o.conf.toFixed(2))))))),
+          h('div',{style:{marginTop:'.8rem',display:'flex',justifyContent:'flex-end'}},h('button',{className:'btn navy',onClick:()=>go(3)},t.nav[3],' →'))):
+        (!S.extracting?h('div',{className:'card',style:{color:'var(--muted)',textAlign:'center',padding:'3rem 1rem'}},manual?(lang==='ar'?'الوضع اليدوي: اضغط "أدخل القواعد يدوياً" ليكتبها مسؤول الالتزام بنفسه':'Manual mode: press "Enter the rules manually" and the Compliance Officer types them'):(lang==='ar'?'اضغط "اقرأ التعميم" ليقرأه الذكاء الاصطناعي':'Press "Read the circular" and the AI reads it')):null)))); }
+function Review({S,lang,go}){ const t=T[lang]; const st=S.status; const left=OBS.filter(o=>st[o.id]==='pending'||st[o.id]==='review').length;
+  return h('div',{className:'fade'}, h(Head,{kick:t.rv.kick,title:t.rv.title,lead:t.rv.lead,right:[h('span',{key:'a',className:'pill navy'},t.rv.approver),h('button',{key:'b',className:'btn pri',disabled:!S.extracted,onClick:S.approveAll},t.rv.approveAll)]}), h(Guide,{n:3,lang,w:'hu'}),
+    !S.extracted?h('div',{className:'card',style:{color:'var(--muted)',textAlign:'center',padding:'3rem'}},lang==='ar'?'استخرج الالتزامات أولاً':'Extract obligations first'):
+    h('div',{className:'card'}, h('div',{style:{display:'flex',gap:'.6rem',marginBottom:'.6rem',alignItems:'center'}},h('span',{className:'pill gold'},left,' ',t.rv.left),h('span',{className:'pill green'},OBS.filter(o=>st[o.id]==='approved').length,' ',t.rv.status.approved),h('span',{className:'pill coral'},OBS.filter(o=>st[o.id]==='rejected').length,' ',t.rv.status.rejected)),
+      h('table',null,h('thead',null,h('tr',null,['#',lang==='ar'?'الالتزام':'Obligation',lang==='ar'?'الجملة الأصلية':'Source sentence',lang==='ar'?'الثقة':'Conf.',lang==='ar'?'الحالة':'Status',''].map((x,i)=>h('th',{key:i},x)))),
+        h('tbody',null,OBS.map(o=>{ const s=st[o.id]; const cl=CIRC.clauses.find(c=>c.id===o.cl); return h('tr',{key:o.id,className:s==='review'?'sel':''},h('td',{className:'mono'},o.id),h('td',null,h('span',{className:`mod ${o.mod}`,style:{marginInlineEnd:6}},o.mod==='must'?'must':o.mod==='must_not'?'must not':'may'),L(o.action,lang)),h('td',{className:'ar',style:{fontSize:'.82rem',color:'var(--ink2)',maxWidth:280}},cl.ar),h('td',null,h('span',{className:`conf ${o.conf<.85?'low':''}`},o.conf.toFixed(2))),h('td',null,h('span',{className:`pill ${s==='approved'?'green':s==='rejected'?'coral':s==='review'?'gold':'grey'}`},t.rv.status[s])),
+          h('td',{style:{whiteSpace:'nowrap'}},s==='approved'||s==='rejected'?null:h(React.Fragment,null,h('button',{className:'btn pri sm',onClick:()=>S.decide(o.id,'approved')},I('check'),' ',t.rv.approve),' ',h('button',{className:'btn sm',onClick:()=>S.decide(o.id,'rejected')},I('x'),' ',t.rv.reject)))); }))),
+      h('div',{style:{marginTop:'.8rem',display:'flex',justifyContent:'space-between',alignItems:'center'}},h('span',{style:{fontSize:'.76rem',color:'var(--muted)'}},lang==='ar'?'كل قرار يُسجّل مع اسم المعتمِد والوقت والجملة الأصلية.':'Every decision is logged with the approver, time and the source sentence.'),h('button',{className:'btn navy',disabled:left>0,onClick:()=>go(4)},t.nav[4],' →')))); }
+function ImpactMap({S,lang,go}){ const t=T[lang]; const [sel,setSel]=useState('OB-01'); const approved=OBS.filter(o=>S.status[o.id]==='approved');
+  const lines=[{t:'loading Innovation Bank map: 20 policies · 30 controls · 8 systems · 6 owners',c:'dim'},{t:'OB-01 → Complaints Policy v3.1 §6 (10 days) … conflict',c:'warn'},{t:'OB-02 → C-22 SMS on ticket creation … template check',c:'ok'},{t:'OB-03 → C-17 closure approval … customer notice missing',c:'warn'},{t:'OB-04 → §7 + C-19 … covered',c:'ok'},{t:'OB-05 → C-31 quarterly returns … dataset missing',c:'warn'},{t:'OB-06 → compliance calendar … overlaps IT change freeze',c:'warn'},{t:'4 gaps · ranked by severity × deadline',c:'ok'}];
+  const m=MAP[sel]; const p=PLAIN[sel]; const ok=m.gap==='none';
+  const lbl=lang==='ar'?{rule:'القاعدة الجديدة تطلب',today:'وضع البنك اليوم',change:'وش لازم يتغيّر',who:'مين يسويه',ready:'البنك جاهز',notready:'البنك غير جاهز',list:'القواعد المعتمدة',pick:'اضغط أي قاعدة لترى التفاصيل'}:{rule:'The new rule asks for',today:'The bank today',change:'What must change',who:'Who does it',ready:'Bank is ready',notready:'Bank is not ready',list:'Confirmed rules',pick:'Click a rule to see the details'};
+  const manual=S.mode[4]==='hu';
+  return h('div',{className:'fade'}, h(Head,{kick:t.mp.kick,title:t.mp.title,lead:t.mp.lead,right:[h(ModeSwitch,{key:'m',S,n:4,lang}),h('button',{key:'r',className:'btn pri',disabled:!S.reviewed||S.mapping||S.mapped,onClick:()=>manual?S.mapDone():S.map()},S.mapping?t.mp.running:S.mapped?[I('check'),' '+(lang==='ar'?'اكتملت المقارنة':'Comparison complete')]:(manual?[I('hand'),' '+(lang==='ar'?'حدّد الأثر يدوياً':'Mark the impact manually')]:[I('zap'),' '+t.mp.run]))]}), h(Guide,{n:4,lang,w:'ai',S}),
+    !S.reviewed?h('div',{className:'card',style:{color:'var(--muted)',textAlign:'center',padding:'3rem'}},lang==='ar'?'اعتمد القواعد أولاً':'Confirm the rules first'):
+    h(React.Fragment,null, S.mapping?h(Processing,{lines,lang,onDone:S.mapDone}):null,
+      S.mapped?h('div',{className:'fade',style:{display:'grid',gridTemplateColumns:'360px 1fr',gap:'1rem',marginTop:S.mapping?'1rem':0}},
+        h('div',{className:'card'},h('h3',null,lbl.list),h('div',{style:{fontSize:'.74rem',color:'var(--muted)',marginBottom:'.5rem'}},lbl.pick),approved.map(o=>{const mm=MAP[o.id];return h('div',{key:o.id,onClick:()=>setSel(o.id),style:{padding:'.6rem .7rem',borderRadius:10,cursor:'pointer',background:sel===o.id?'var(--mint)':'transparent',border:sel===o.id?'1px solid var(--green)':'1px solid transparent',display:'grid',gap:'.25rem',marginBottom:'.25rem'}},h('span',{style:{fontSize:'.86rem',fontWeight:600}},L(o.action,lang)),h('span',{className:`gap ${mm.sev}`,style:{justifySelf:'start'}},mm.gap==='none'?I('check'):I('alert'),' ',t.mp.gapT[mm.gap]));})),
+        h('div',{style:{display:'grid',gap:'.8rem'}},
+          h('div',{className:'card',style:{borderInlineStart:'5px solid var(--navy)'}},h('div',{className:'kick',style:{marginBottom:'.35rem'}},lbl.rule),h('div',{style:{fontSize:'1.05rem',fontWeight:600}},L(p.rule,lang))),
+          h('div',{className:'card',style:{borderInlineStart:`5px solid ${ok?'var(--green)':'var(--coral)'}`}},h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:'.5rem',marginBottom:'.35rem'}},h('div',{className:'kick'},lbl.today),h('span',{className:`gap ${m.sev}`},ok?[I('check'),' '+lbl.ready]:[I('alert'),' '+lbl.notready+' · '+t.mp.sev[m.sev]])),h('div',{style:{fontSize:'1rem'}},L(p.today,lang))),
+          h('div',{className:'card',style:{borderInlineStart:'5px solid var(--green)'}},h('div',{className:'kick',style:{marginBottom:'.35rem'}},lbl.change),h('ol',{style:{margin:0,paddingInlineStart:'1.2rem',fontSize:'1rem',lineHeight:1.8}},L(p.change,lang).map((c,i)=>h('li',{key:i},c))),h('div',{style:{marginTop:'.6rem',display:'flex',gap:'.5rem',alignItems:'center',fontSize:'.9rem'}},h('span',{className:'kick'},lbl.who),h('b',null,L(p.who,lang)))),
+          h('div',{style:{display:'flex',justifyContent:'flex-end'}},h('button',{className:'btn navy',onClick:()=>go(5)},t.nav[5],' →')))):null)); }
+function Drafts({S,lang,go}){ const t=T[lang]; const lines=[{t:'OB-01 · drafting clause 6 (10 → 5 working days)',c:'ok'},{t:'OB-02/03 · merging notice + closure rule into clause 6',c:'ok'},{t:'tasks: Legal · IT ×2 · Operations · Compliance',c:'ok'},{t:'due dates: Hijri + Gregorian, before 1447/04/15',c:'ok'},{t:'2 drafts · 5 tasks · all marked PROPOSAL',c:'ok'}];
+  const b=DRAFT.before[lang==='ar'?'ar':'en'], a=DRAFT.after[lang==='ar'?'ar':'en'];
+  const manual=S.mode[5]==='hu';
+  return h('div',{className:'fade'}, h(Head,{kick:t.dr.kick,title:t.dr.title,lead:t.dr.lead,right:[h(ModeSwitch,{key:'m',S,n:5,lang}),h('button',{key:'g',className:'btn pri',disabled:!S.mapped||S.drafting||S.drafted,onClick:()=>manual?S.draftDone():S.draft()},S.drafting?t.dr.running:S.drafted?I('check'):(manual?[I('hand'),' '+(lang==='ar'?'اكتبها يدوياً':'Write them manually')]:[I('zap'),' '+t.dr.gen])),h('button',{key:'s',className:'btn navy',disabled:!S.drafted||S.sent,onClick:S.sendTasks},S.sent?[I('check'),' '+t.dr.sent]:t.dr.send)]}), h(Guide,{n:5,lang,w:'ai',S}),
+    !S.mapped?h('div',{className:'card',style:{color:'var(--muted)',textAlign:'center',padding:'3rem'}},lang==='ar'?'شغّل ربط الأثر أولاً':'Run impact mapping first'):
+    h(React.Fragment,null, S.drafting?h(Processing,{lines,lang,onDone:S.draftDone}):null,
+      S.drafted?h('div',{className:'fade',style:{marginTop:S.drafting?'1rem':0}},
+        h('div',{className:'card',style:{marginBottom:'1rem'}},h('h3',null,'OB-01 · OB-02 · OB-03 → ',lang==='ar'?'سياسة الشكاوى، البند 6':'Complaints Policy, clause 6'),h('div',{className:'diff'},h('div',{className:'before'},h('div',{className:'lb'},t.dr.before),h('div',{className:lang==='ar'?'ar':''},b)),h('div',{className:'after'},h('div',{className:'lb'},t.dr.after),h('div',{className:lang==='ar'?'ar':''},a))),h('div',{style:{marginTop:'.6rem',fontSize:'.76rem',color:'var(--muted)'}},lang==='ar'?'مقترح · يعتمده القانوني ولجنة الالتزام · المصدر: م3-أ، م3-ب، م4':'Proposal · approved by Legal and the Compliance Committee · source: م3-أ, م3-ب, م4')),
+        h('div',{className:'card'},h('table',null,h('thead',null,h('tr',null,t.dr.th.map((x,i)=>h('th',{key:i},x)))),h('tbody',null,TASKS.map((k,i)=>h('tr',{key:i},h('td',null,h('b',null,L(k.dept,lang))),h('td',null,L(k.task,lang),' ',h('span',{className:'mono',style:{fontSize:'.68rem',color:'var(--muted)'}},k.ob)),h('td',null,L(k.owner,lang)),h('td',{className:'mono',style:{fontSize:'.76rem'}},k.due),h('td',null,h('span',{className:`pill ${S.sent?'gold':'grey'}`},S.sent?t.dr.st.sent:t.dr.st.draft)))))),
+          h('div',{style:{marginTop:'.8rem',display:'flex',justifyContent:'flex-end'}},h('button',{className:'btn navy',disabled:!S.sent,onClick:()=>go(6)},t.nav[6],' →')))):null)); }
+function ReportDoc({S,lang}){ const t=T[lang]; const e=t.ev; const proofFor=id=>S.evidence.find(x=>x.ob===id);
+  return h('div',{className:'report fade'},
+    h('div',{className:'rep-head'},h('span',null,h('img',{className:'logo-dark',src:LOGO_DARK,alt:'',style:{height:34}}),h('img',{className:'logo-light',src:LOGO_LIGHT,alt:'',style:{height:34}})),h('div',{className:'rep-title'},e.rep.title)),
+    h('div',{className:'rep-meta'},h('div',null,e.rep.to),h('div',null,e.rep.from),h('div',null,e.rep.subject),h('div',null,e.rep.date,': 2025-09-21 · 1447/03/29')),
+    h('p',{className:'rep-intro'},e.rep.intro),
+    h('table',{className:'rep-table'},h('thead',null,h('tr',null,e.rep.th.map((x,i)=>h('th',{key:i},x)))),h('tbody',null,OBS.map(o=>{const p=PLAIN[o.id];const na=MAP[o.id].gap==='none';const pf=proofFor(o.id);return h('tr',{key:o.id},h('td',null,L(p.rule,lang)),h('td',null,na?h('i',{style:{color:'var(--muted)'}},e.rep.na):L(p.change,lang).join(lang==='ar'?'، ':'; ')),h('td',null,pf?h('span',null,pf.name,h('div',{className:'hash'},e.fp,': ',pf.hash?pf.hash.slice(0,12)+'…':'')):h('span',{style:{color:'var(--muted)'}},'—')),h('td',null,h('span',{className:`pill ${na?'grey':'green'}`},na?e.rep.na:e.rep.done)));}))),
+    h('div',{className:'rep-sign'},h('div',null,h('b',null,e.rep.sign),h('div',{style:{fontSize:'.78rem',color:'var(--muted)'}},S.reportOk?[I('check'),' '+e.approved]:(lang==='ar'?'بانتظار الاعتماد':'awaiting approval')),h('div',{style:{fontSize:'.78rem',color:'var(--muted)'}},I('check'),' ',e.rep.audit)),h('div',{className:'rep-note'},e.rep.note))); }
+function Evidence({S,lang,go}){ const t=T[lang]; const e=t.ev; const allFiles=S.evidence.length>=EVID.length;
+  const lines=[{t:'reading approved rules (6) and tasks (5, all approved by teams)',c:'dim'},{t:'matching each rule to its proof file … 5 files, 5 fingerprints verified',c:'ok'},{t:'OB-04 needs no change → marked "no change needed"',c:'ok'},{t:'writing the cover letter in the regulator\'s format',c:'ok'},{t:'report ready for human review · nothing is sent automatically',c:'warn'}];
+  const report=h(ReportDoc,{S,lang});
+  const manual=S.mode[6]==='hu';
+  return h('div',{className:'fade'}, h(Head,{kick:e.kick,title:e.title,lead:e.lead,right:[
+      h(ModeSwitch,{key:'m',S,n:6,lang}),
+      h('button',{key:'a',className:'btn',disabled:!S.sent||allFiles,onClick:S.addEvidence},allFiles?[I('check'),' '+(lang==='ar'?'5 ملفات':'5 files')]:'+ '+e.add),
+      h('button',{key:'p',className:'btn pri',disabled:!allFiles||S.reportPrep||S.report,onClick:()=>manual?S.prepDone():S.prepReport()},S.reportPrep?e.prepping:S.report?[I('check'),' '+(lang==='ar'?'التقرير جاهز':'Report ready')]:(manual?[I('hand'),' '+(lang==='ar'?'اكتب التقرير يدوياً':'Write the report manually')]:[I('zap'),' '+e.prep])),
+      h('button',{key:'k',className:'btn',disabled:!S.report||S.reportOk,onClick:S.approveReport},S.reportOk?[I('check'),' '+e.approved]:[I('pen'),' '+e.approve]),
+      h('button',{key:'s',className:'btn navy',disabled:!S.reportOk||S.pack,onClick:S.sendReport},S.pack?[I('check'),' '+e.sent]:[I('send'),' '+e.send]),
+      h('button',{key:'pr',className:'btn ghost',disabled:!S.report,onClick:()=>window.print()},I('printer'),' ',e.print)]}), h(Guide,{n:6,lang,w:'hu',S}),
+    !S.sent?h('div',{className:'card',style:{color:'var(--muted)',textAlign:'center',padding:'3rem'}},lang==='ar'?'أرسل المهام أولاً':'Send the tasks first'):
+    h('div',{style:{display:'grid',gridTemplateColumns:'1fr 330px',gap:'1rem',alignItems:'start'}},
+      h('div',null, S.reportPrep?h(Processing,{lines,lang,onDone:S.prepDone}):null,
+        S.pack?h('div',{className:'sentbox fade'},h('div',null,h('b',null,I('check'),' ',e.sentBox.t),h('div',null,e.sentBox.ref,': ',h('span',{className:'mono'},'TM-2025-0142'),' · ',e.sentBox.when,': 2025-09-21 · ',e.sentBox.by),h('div',{style:{fontSize:'.76rem',opacity:.8,marginTop:'.2rem'}},e.sentBox.sim)),h('button',{className:'btn pri',onClick:()=>go(7)},t.nav[7],' →')):null,
+        S.report?report:(!S.reportPrep?h('div',{className:'card',style:{color:'var(--muted)',textAlign:'center',padding:'3rem'}},allFiles?(lang==='ar'?'اضغط "جهّز التقرير" ليكتبه الذكاء':'Press "Prepare the report" and the AI writes it'):(lang==='ar'?'اجمع ملفات الأقسام أولاً':'Collect the teams\' files first')):null)),
+      h('div',{className:'card'},h('h3',null,e.files,' · ',S.evidence.length,'/',EVID.length), S.evidence.length===0?h('div',{style:{color:'var(--muted)',fontSize:'.84rem'}},lang==='ar'?'لا ملفات بعد.':'No files yet.'):
+        h('div',{style:{display:'grid',gap:'.45rem'}},S.evidence.map((f,i)=>h('div',{key:i,className:'ev fade',style:{padding:'.5rem .6rem'}},h('span',{className:'ic',style:{width:30,height:30}},f.type),h('div',null,h('b',{style:{fontSize:'.8rem'}},f.name),h('div',{style:{fontSize:'.7rem',color:'var(--muted)'}},f.attested?h('span',{style:{color:'var(--green2)'}},I('check'),' ',e.attest):h('span',{style:{color:'var(--gold)'}},I('clock'),' ',e.pending))),null))))));}
+function Supervisor({S,lang}){ const t=T[lang]; const [sel,setSel]=useState(0); const ar=lang==='ar';
+  const X=ar?{list:'التقارير التي أرسلتها المؤسسات',pick:'تظهر هنا فقط التقارير التي اختارت المؤسسات إرسالها. اضغط أي تقرير لقراءته.',received:'تقرير مُرسل · بانتظار مراجعتك',accepted:'مقبول · التعميم مُنفَّذ',inprog:'لم ترسل تقريراً بعد',late:'لم ترسل تقريراً بعد',files:'الإثباتات التي أرفقتها المؤسسة',verified:'البصمة مطابقة · الملف لم يُعدَّل',open:'فتح',accept:'اعتماد: التعميم نُفّذ فعلاً',ask:'طلب توضيح من المؤسسة',remind:'',noRep:'هذه المؤسسة لم ترسل تقريراً بعد. الجهة الرقابية لا ترى شيئاً حتى تقرر المؤسسة الإرسال.',acceptedBox:'اعتمد البنك المركزي التقرير · التعميم مغلق لهذه المؤسسة',by:'بتاريخ 2025-09-22 · مراجع الالتزام، البنك المركزي',never:'الجهة الرقابية لا تراقب المؤسسة ولا تدخل أنظمتها. ',neverList:'تستلم فقط ما تُرسله المؤسسة: التقرير وإثباتاته. لا بيانات عملاء، لا أنظمة داخلية، لا نص سياسات.',reminded:''}
+   :{list:'Reports the institutions have sent',pick:'Only reports that institutions chose to send appear here. Click one to read it.',received:'Report sent · waiting for your review',accepted:'Accepted · circular implemented',inprog:'No report sent yet',late:'No report sent yet',files:'Proof attached by the institution',verified:'fingerprint matches · file not altered',open:'Open',accept:'Accept: the circular is really implemented',ask:'Ask the institution for details',remind:'',noRep:'This institution has not sent a report yet. The regulator sees nothing until the institution decides to send.',acceptedBox:'The central bank accepted the report · circular closed for this institution',by:'on 2025-09-22 · Compliance reviewer, Central Bank',never:'The regulator does not monitor the institution and never enters its systems. ',neverList:'It only receives what the institution sends: the report and its proof. No customer data, no internal systems, no policy text.',reminded:''};
+  const status=i=>i===0?(S.regAccepted?'accepted':S.pack?'received':'inprog'):'inprog';
+  const chip=st=>st==='accepted'?h('span',{className:'pill green'},I('check'),' ',X.accepted):st==='received'?h('span',{className:'pill navy'},I('dot'),' ',X.received):h('span',{className:'pill grey'},I('circle'),' ',X.inprog);
+  const s=SUP[sel]; const st=status(sel);
+  return h('div',{className:'fade'}, h(Head,{kick:t.sp.kick,title:t.sp.title,lead:t.sp.lead,right:[h('span',{key:'l',className:'lock'},I('lock'),' ',t.sp.lock)]}), h(Guide,{n:7,lang,w:'rd'}),
+    h('div',{style:{display:'grid',gridTemplateColumns:'360px 1fr',gap:'1rem',alignItems:'start'}},
+      h('div',{className:'card'},h('h3',null,X.list),h('div',{style:{fontSize:'.74rem',color:'var(--muted)',marginBottom:'.5rem'}},X.pick),
+        SUP.map((x,i)=>{const stt=status(i);return h('div',{key:i,onClick:()=>setSel(i),style:{padding:'.7rem .75rem',borderRadius:10,cursor:'pointer',marginBottom:'.35rem',background:sel===i?'var(--mint)':'var(--paper2)',border:sel===i?'1px solid var(--green)':'1px solid var(--line)',display:'grid',gap:'.35rem',opacity:stt==='inprog'?.7:1}},h('b',null,L(x.n,lang)),chip(stt),stt!=='inprog'?h('div',{style:{fontSize:'.72rem',color:'var(--muted)'}},(ar?'أُرسل في ':'sent on ')+'2025-09-21 · TM-2025-0142'):null);}),
+        h('div',{className:'sup',style:{marginTop:'.8rem'}},I('clock'),' ',t.sp.road)),
+      h('div',{style:{display:'grid',gap:'.9rem'}},
+        h('div',{className:'card',style:{display:'flex',justifyContent:'space-between',alignItems:'center',gap:'1rem',flexWrap:'wrap'}},h('div',null,h('b',{style:{fontSize:'1.05rem'}},L(s.n,lang)),h('div',{style:{fontSize:'.8rem',color:'var(--muted)'}},ar?CIRC.subjectAr:CIRC.subjectEn)),chip(st)),
+        sel===0&&S.pack?h(React.Fragment,null,
+          S.regAccepted?h('div',{className:'sentbox'},h('div',null,h('b',null,I('check'),' ',X.acceptedBox),h('div',{style:{fontSize:'.78rem'}},X.by))):
+          h('div',{className:'card',style:{display:'flex',gap:'.6rem',flexWrap:'wrap',alignItems:'center'}},h('button',{className:'btn pri',onClick:S.acceptReport},I('check'),' ',X.accept),h('button',{className:'btn'},'? ',X.ask)),
+          h('div',{className:'card'},h('h3',null,X.files,' · ',S.evidence.length),h('div',{style:{display:'grid',gap:'.45rem'}},S.evidence.map((f,i)=>h('div',{key:i,className:'ev',style:{padding:'.5rem .7rem'}},h('span',{className:'ic',style:{width:30,height:30}},f.type),h('div',null,h('b',{style:{fontSize:'.84rem'}},f.name),h('div',{style:{fontSize:'.72rem',color:'var(--green2)'}},I('check'),' ',X.verified),h('div',{className:'hash'},f.hash?f.hash.slice(0,24)+'…':'')),h('button',{className:'btn sm'},X.open))))),
+          h(ReportDoc,{S,lang})):
+        h('div',{className:'card',style:{padding:'2rem',textAlign:'center',color:'var(--muted)'}},h('div',{style:{fontSize:'2rem',marginBottom:'.4rem'}},I('inbox',{style:{width:'2.2rem',height:'2.2rem',color:'var(--muted)'}})),h('div',null,X.noRep)),
+        h('div',{className:'card',style:{fontSize:'.84rem',color:'var(--ink2)'}},h('b',null,X.never),X.neverList)))); }
+/* ================= app ================= */
+function App(){ const [lang,setLang]=useLang(); const t=T[lang];
+  const Q=new URLSearchParams(location.search); const FULL=Q.has('full'); const Q_SCREEN=parseInt(Q.get('screen')||'0',10)||0;
+  const [role,setRole]=useState(Q_SCREEN===7?'sup':'inst'); const [screen,setScreen]=useState(Q_SCREEN); const [toast,setToast]=useState('');
+  const [simple,setSimple]=useState(()=>{ if(Q.get('view')==='simple') return true; if(FULL||Q.get('view')==='full') return false; try{ return localStorage.getItem('tm.view')!=='full'; }catch(e){ return true; } }); useEffect(()=>{ try{localStorage.setItem('tm.view',simple?'simple':'full')}catch(e){} },[simple]);
+  const init=()=>FULL?({extracting:false,extracted:true,status:Object.fromEntries(OBS.map(o=>[o.id,'approved'])),mapping:false,mapped:true,drafting:false,drafted:true,sent:true,evidence:EVID.map((e,i)=>({...e,hash:'9f2c7b1e4d8a6c3f5b0e2a7d9c1f4b6e8a3d5c7f9b1e2d4a6c8f0b3e5a7d9c1f'.slice(i).padEnd(64,'0')})),reportPrep:false,report:true,reportOk:true,pack:true,regAccepted:false,packHash:'a9f3c21e7b5d4e8f0c1b2a3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e21c',playing:false})
+    :({extracting:false,extracted:false,status:Object.fromEntries(OBS.map(o=>[o.id,o.conf<.85?'review':'pending'])),mapping:false,mapped:false,drafting:false,drafted:false,sent:false,evidence:[],reportPrep:false,report:false,reportOk:false,pack:false,regAccepted:false,packHash:null,playing:false});
+  const initEmpty=()=>({extracting:false,extracted:false,status:Object.fromEntries(OBS.map(o=>[o.id,o.conf<.85?'review':'pending'])),mapping:false,mapped:false,drafting:false,drafted:false,sent:false,evidence:[],reportPrep:false,report:false,reportOk:false,pack:false,regAccepted:false,packHash:null,playing:false,manualBy:false});
+  const [st,setSt]=useState(init);
+  const [theme,setTheme]=useState(()=>{ const q=Q.get('theme'); if(q==='dark'||q==='light') return q; try{ return localStorage.getItem('tm.theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'); }catch(e){ return 'light'; } });
+  useEffect(()=>{ document.documentElement.dataset.theme=theme; try{localStorage.setItem('tm.theme',theme)}catch(e){} },[theme]);
+  const [notes,setNotes]=useState([]); const [nopen,setNopen]=useState(false);
+  const note=m=>setNotes(n=>[...n,{t:m,at:new Date(),read:false}]);
+  useEffect(()=>{ note(lang==='ar'?'وصل تعميم جديد من البنك المركزي: تعليمات معالجة شكاوى العملاء (نسخة 2)':'New circular from the central bank: customer complaints handling instructions (v2)'); },[]);
+  useEffect(()=>{ if(nopen) setNotes(n=>n.map(x=>({...x,read:true}))); },[nopen]);
+  const mainRef=useRef(null); useEffect(()=>{ if(mainRef.current) mainRef.current.scrollTo({top:0,behavior:'smooth'}); },[screen,role]);
+  useEffect(()=>{ const k=e=>{ if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT') return; const rtl=lang==='ar'; const next=(e.key==='ArrowRight'&&!rtl)||(e.key==='ArrowLeft'&&rtl); const prev=(e.key==='ArrowLeft'&&!rtl)||(e.key==='ArrowRight'&&rtl); if(next) go(Math.min(7,screen+1)); else if(prev) go(Math.max(0,screen-1)); else if(e.key==='Escape') setNopen(false); }; window.addEventListener('keydown',k); return ()=>window.removeEventListener('keydown',k); },[screen,lang]);
+  const say=m=>{ setToast(m); note(m); setTimeout(()=>setToast(''),2600); };
+  const [mode,setModeSt]=useState({2:'ai',4:'ai',5:'ai',6:'ai'}); const setMode=(n,v)=>setModeSt(m=>({...m,[n]:v}));
+  const up=p=>setSt(s=>({...s,...(typeof p==='function'?p(s):p)}));
+  const reviewed=Object.values(st.status).every(v=>v==='approved'||v==='rejected');
+  const S={...st,screen,reviewed,mode,setMode,simple,
+    extract:()=>up({extracting:true}), extractDone:(manual)=>{up({extracting:false,extracted:true,manualBy:!!manual}); say(manual?(lang==='ar'?'أدخل مسؤول الالتزام 6 قواعد يدوياً':'The Compliance Officer entered 6 rules manually'):t.toast.extracted);},
+    decide:(id,v)=>{ up(s=>({status:{...s.status,[id]:v}})); say(v==='approved'?t.toast.approved:t.toast.rejected); },
+    approveAll:()=>{ up(s=>({status:Object.fromEntries(OBS.map(o=>[o.id,o.conf>=.85?'approved':s.status[o.id]]))})); say(t.toast.approved); },
+    map:()=>up({mapping:true}), mapDone:()=>{up({mapping:false,mapped:true}); say(t.toast.mapped);},
+    draft:()=>up({drafting:true}), draftDone:()=>{up({drafting:false,drafted:true}); say(t.toast.drafted);},
+    sendTasks:()=>{up({sent:true}); say(t.toast.sent);},
+    addEvidence:async()=>{ const n=st.evidence.length; const e=EVID[n]; if(!e) return; const hash=await sha256(e.name+'|'+e.col+'|'+e.ob+'|innovation-bank'); up(s=>({evidence:[...s.evidence,{...e,hash}]})); say(t.toast.hashed); },
+    prepReport:()=>up({reportPrep:true}),
+    prepDone:async()=>{ const hash=await sha256(st.evidence.map(e=>e.hash).join('')); up({reportPrep:false,report:true,packHash:hash}); say(lang==='ar'?'كتب الذكاء التقرير · بانتظار مراجعتك':'The AI wrote the report · waiting for your review'); },
+    approveReport:()=>{ up({reportOk:true}); say(lang==='ar'?'اعتمدت التقرير':'Report approved'); },
+    sendReport:()=>{ up({pack:true}); say(lang==='ar'?'أُرسل التقرير إلى البنك المركزي (محاكاة)':'Report sent to the central bank (simulated)'); },
+    acceptReport:()=>{ up({regAccepted:true}); say(lang==='ar'?'اعتمد البنك المركزي التقرير · التعميم مغلق':'The central bank accepted the report · circular closed'); },
+    say,
+    reset:()=>{ setSt(initEmpty()); setScreen(0); setRole('inst'); setModeSt({2:'ai',4:'ai',5:'ai',6:'ai'}); setNotes([]); setNopen(false); try{history.replaceState(null,'',location.pathname);}catch(e){} },
+    play:()=>{ setSt(initEmpty()); setModeSt({2:'ai',4:'ai',5:'ai',6:'ai'}); setRole('inst'); setScreen(1); setTimeout(()=>up({playing:true}),50); }};
+  // autoplay orchestration
+  useEffect(()=>{ if(!st.playing) return; let c=true; const w=ms=>new Promise(r=>setTimeout(r,ms));
+    (async()=>{ await w(1600); if(!c) return; setScreen(2); await w(600); up({extracting:true}); })(); return ()=>{c=false;}; },[st.playing]);
+  useEffect(()=>{ if(!st.playing||!st.extracted) return; let c=true; const w=ms=>new Promise(r=>setTimeout(r,ms));
+    (async()=>{ await w(1800); if(!c) return; setScreen(3); await w(1400); S.approveAll(); await w(1200); up(s=>({status:{...s.status,'OB-03':'approved'}})); await w(1000); setScreen(4); await w(600); up({mapping:true}); })(); return ()=>{c=false;}; },[st.playing,st.extracted]);
+  useEffect(()=>{ if(!st.playing||!st.mapped) return; let c=true; const w=ms=>new Promise(r=>setTimeout(r,ms));
+    (async()=>{ await w(2200); if(!c) return; setScreen(5); await w(600); up({drafting:true}); })(); return ()=>{c=false;}; },[st.playing,st.mapped]);
+  useEffect(()=>{ if(!st.playing||!st.drafted) return; let c=true; const w=ms=>new Promise(r=>setTimeout(r,ms));
+    (async()=>{ await w(2000); if(!c) return; S.sendTasks(); await w(1200); setScreen(6); for(let i=0;i<5;i++){ await w(600); if(!c) return; await S.addEvidence(); } await w(800); up({reportPrep:true}); })(); return ()=>{c=false;}; },[st.playing,st.drafted]);
+  useEffect(()=>{ if(!st.playing||!st.report) return; let c=true; const w=ms=>new Promise(r=>setTimeout(r,ms));
+    (async()=>{ await w(2600); if(!c) return; S.approveReport(); await w(1400); S.sendReport(); await w(1800); setRole('sup'); setScreen(7); up({playing:false}); })(); return ()=>{c=false;}; },[st.playing,st.report]);
+  const go=n=>{ setScreen(n); if(n===7) setRole('sup'); else setRole('inst'); };
+  const done=[false,true,st.extracted,reviewed&&st.extracted,st.mapped,st.sent,st.pack,false];
+  const screens=[Overview,Collector,Extract,Review,ImpactMap,Drafts,Evidence,Supervisor]; const Cur=role==='sup'?Supervisor:screens[screen];
+  window.__tmSimple=simple; const nextN=role==='sup'?null:Math.min(7,screen+1); const ts=t.simple;
+  return h('div',{className:'app'+(simple?' simple':'')},
+    h('div',{className:'top'},h('img',{src:LOGO_LIGHT,alt:'Taameem'}),h('span',{className:'pill outline'},lang==='ar'?'نموذج أولي · بيانات مُهيّأة':'Prototype · staged data'),h('span',{className:'sp'}),
+      h('button',{className:'btn sm ghost',style:{color:'var(--onnavy)',borderColor:'rgba(255,255,255,.25)'},onClick:()=>setSimple(!simple)},I('layout'),' ',simple?ts.view.full:ts.view.simple),
+      simple?h('button',{className:'btn pri sm',onClick:S.play,disabled:st.playing},I('play'),' ',st.playing?t.playing:t.play):null,
+      simple?h('button',{className:'btn sm ghost',style:{color:'var(--onnavy)',borderColor:'rgba(255,255,255,.25)'},onClick:S.reset},t.reset):null,
+      h('span',{className:'topbar-line'}),
+      h('div',{className:'role'},h('button',{className:role==='inst'?'on':'',onClick:()=>{setRole('inst');}},t.roleInst),h('button',{className:role==='sup'?'on':'',onClick:()=>{setRole('sup');setScreen(7);}},t.roleSup)),
+      h(Bell,{notes,open:nopen,setOpen:setNopen,lang}),
+      h('button',{className:'ibtn',onClick:()=>setTheme(theme==='dark'?'light':'dark'),'aria-label':'theme',title:theme==='dark'?(lang==='ar'?'الوضع الفاتح':'Light mode'):(lang==='ar'?'الوضع الداكن':'Dark mode')},theme==='dark'?I('sun'):I('moon')),
+      h('button',{className:'btn sm ghost',style:{color:'var(--onnavy)',borderColor:'rgba(255,255,255,.25)'},onClick:()=>setLang(lang==='ar'?'en':'ar')},t.lang)),
+    h('aside',{className:'side'},h('div',{className:'lbl'},lang==='ar'?'السيناريو':'Scenario'),h('div',{className:'sprog',title:'progress'},h('i',{style:{width:Math.round(done.filter(Boolean).length/7*100)+'%'}})),
+      t.nav.map((n,i)=>h('button',{key:i,className:`nav ${screen===i&&(i===7?role==='sup':role==='inst')?'on':''} ${done[i]?'done':''}`,onClick:()=>go(i)},h('span',{className:'n'},done[i]?I('check'):i===0?I('home'):i),n,i===7?h('span',{className:'st'},t.navSt.road):done[i]?h('span',{className:'st'},t.navSt.done):null)),
+      h('div',{style:{marginTop:'auto',padding:'.8rem .6rem',fontSize:'.72rem',color:'var(--muted)',lineHeight:1.5}},h('button',{className:'btn pri sm',style:{width:'100%',justifyContent:'center',marginBottom:'.5rem'},onClick:S.play,disabled:st.playing},st.playing?t.playing:[I('play'),' '+t.play]),h('button',{className:'btn sm',style:{width:'100%',justifyContent:'center'},onClick:S.reset},t.reset),h('div',{style:{marginTop:'.7rem'}},h('span',{className:'kbd'},'←'),' ',h('span',{className:'kbd'},'→'),' ',lang==='ar'?'للتنقل بين الخطوات':'move between steps'),h('div',{style:{marginTop:'.4rem'}},'Innovation Bank · demo map · Financial Market Innovation Hackathon'))),
+    h('div',{className:'wm-bg','aria-hidden':true},h('div',{className:'glow-orb'}),h('img',{className:'wm-word',src:theme==='dark'?LOGO_LIGHT:LOGO_DARK,alt:''}),h('img',{src:MARK,alt:''})),
+    h('main',{className:'main',ref:mainRef,onClick:()=>{ if(nopen) setNopen(false); }},simple?h(Strip,{screen:role==='sup'?7:screen,done,go,lang,role}):null,h(Cur,{S,lang,go})),
+    simple&&!(role==='sup')?h('div',{className:'nextfab'},screen>0?h('button',{className:'btn',onClick:()=>go(screen-1)},lang==='ar'?I('arrowr'):I('arrowl'),' ',ts.prev):null,h('button',{className:'btn navy',onClick:()=>go(nextN)},ts.next+(nextN?' · '+nextN+' · '+ts.names[nextN-1]:''),' ',lang==='ar'?I('arrowl'):I('arrowr'))):null,
+    h(Toast,{msg:toast}));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
