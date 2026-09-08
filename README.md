@@ -1,6 +1,6 @@
 # Taameem · تعميم — clickable prototype
 
-From a regulatory circular to approved changes and proof, inside the institution's own map.
+From a regulatory announcement to approved changes and proof, inside the institution's own map.
 Built for the Financial Market Innovation Hackathon (The Financial Academy · Capital Market Authority), Track 01 RegTech & Compliance Automation.
 
 نموذج أولي قابل للنقر: تعميم رقابي واحد يمرّ بسبع خطوات، من وصوله إلى ما تستلمه الجهة الرقابية.
@@ -44,7 +44,7 @@ which writes a fresh `index.html`.
 
 ## Team / الفريق
 
-Areej Almalki · Abdulrhman Altayash · Ibrahim Alshanqiti · Rawan Aldosari · Abdulhakim
+Areej Almalki · Abdulrhman Altayash · Ibrahim Alshanqiti · Rawan Aldosari · Abdulhakeem Almidan
 
 ## License
 
