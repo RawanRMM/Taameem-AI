@@ -583,8 +583,11 @@ function Bell({notes,open,setOpen,lang}){ const unread=notes.filter(n=>!n.read).
   return h(React.Fragment,null, h('button',{className:'ibtn',onClick:()=>setOpen(!open),'aria-label':'notifications'},I('bell'),unread?h('span',{className:'badge'},unread):null),
     open?h('div',{className:'npanel'},h('h4',null,lang==='ar'?'الإشعارات':'Notifications',h('button',{className:'btn sm ghost',onClick:()=>setOpen(false)},I('x'))), notes.length===0?h('div',{className:'nitem'},h('i'),h('span',{style:{color:'var(--muted)'}},lang==='ar'?'لا إشعارات بعد':'No notifications yet')):
       [...notes].reverse().map((n,i)=>h('div',{key:i,className:`nitem ${n.read?'':'unread'}`},h('i'),h('div',null,n.t,h('small',null,fmt(n.at)))))):null); }
-function Processing({lines,onDone,lang}){ const [i,setI]=useState(0); useEffect(()=>{ if(i>=lines.length){ onDone&&onDone(); return; } const t=setTimeout(()=>setI(i+1),420); return ()=>clearTimeout(t); },[i]);
-  return h('div',{className:'log fade'}, lines.slice(0,i).map((l,k)=>h('div',{key:k,className:l.c||''},'› ',l.t)), h('div',{className:'prog'},h('i',{style:{width:Math.round(i/lines.length*100)+'%'}})), i<lines.length?h('span',{className:'dim'},lang==='ar'?'…':'…'):null); }
+function Processing({lines,onDone,lang}){ const [i,setI]=useState(0); const box=useRef(null);
+  useEffect(()=>{ if(i>=lines.length){ onDone&&onDone(); return; }
+    try{ if(box.current) box.current.scrollIntoView({behavior:'smooth',block:'end',inline:'nearest'}); }catch(e){}
+    const t=setTimeout(()=>setI(i+1),420); return ()=>clearTimeout(t); },[i]);
+  return h('div',{className:'log fade',ref:box}, lines.slice(0,i).map((l,k)=>h('div',{key:k,className:l.c||''},'› ',l.t)), h('div',{className:'prog'},h('i',{style:{width:Math.round(i/lines.length*100)+'%'}})), i<lines.length?h('span',{className:'dim'},lang==='ar'?'…':'…'):null); }
 function Head({kick,title,lead,right}){ return h('div',{className:'h'},h('div',null,h('div',{className:'kick'},kick),h('h1',null,title),lead?h('p',null,lead):null),right?h('div',{style:{display:'flex',gap:'.5rem',flexWrap:'wrap'}},right):null); }
 function ModeSwitch({S,n,lang}){ const m=S.mode[n]||'ai'; const ar=lang==='ar';
   return h('div',{className:'mode'},h('button',{className:m==='ai'?'on':'',onClick:()=>S.setMode(n,'ai')},I('sparkles'),ar?'بالذكاء الاصطناعي':'with the AI'),h('button',{className:m==='hu'?'on':'',onClick:()=>S.setMode(n,'hu')},I('hand'),ar?'يدوياً':'manually')); }
@@ -745,7 +748,11 @@ function App(){ const [lang,setLang]=useLang(); const t=T[lang];
   useEffect(()=>{ note(lang==='ar'?'وصل تعميم جديد من البنك المركزي: تعليمات معالجة شكاوى العملاء (نسخة 2)':'New announcement from the central bank: customer complaints handling instructions (v2)'); },[]);
   useEffect(()=>{ if(nopen) setNotes(n=>n.map(x=>({...x,read:true}))); },[nopen]);
   useEffect(()=>{ if(simple) setSideOpen(false); },[simple]);
-  const mainRef=useRef(null); useEffect(()=>{ if(mainRef.current) mainRef.current.scrollTo({top:0,behavior:'smooth'}); },[screen,role]);
+  const mainRef=useRef(null);
+  const scrollMain=where=>{ const el=mainRef.current; if(!el) return; const reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches; const top=where==='bottom'?el.scrollHeight:0; requestAnimationFrame(()=>{ try{ el.scrollTo({top,behavior:reduce?'auto':'smooth'}); }catch(e){ el.scrollTop=top; } }); };
+  useEffect(()=>{ if(st.playing){ const t=setTimeout(()=>scrollMain('bottom'),120); return ()=>clearTimeout(t); } scrollMain('top'); },[screen,role]);
+  useEffect(()=>{ if(!st.playing) return; scrollMain('bottom'); },[st.playing,st.extracting,st.extracted,st.mapping,st.mapped,st.drafting,st.drafted,st.sent,st.evidence.length,st.reportPrep,st.report,st.reportOk,st.pack,st.status,toast]);
+  useEffect(()=>{ if(!st.playing||!mainRef.current) return; const el=mainRef.current; let raf=0; const follow=()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(()=>scrollMain('bottom')); }; const mo=new MutationObserver(follow); mo.observe(el,{childList:true,subtree:true,characterData:true}); const id=setInterval(follow,450); return ()=>{ mo.disconnect(); clearInterval(id); cancelAnimationFrame(raf); }; },[st.playing]);
   useEffect(()=>{ const k=e=>{ if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT') return; const rtl=lang==='ar'; const next=(e.key==='ArrowRight'&&!rtl)||(e.key==='ArrowLeft'&&rtl); const prev=(e.key==='ArrowLeft'&&!rtl)||(e.key==='ArrowRight'&&rtl); if(next) go(Math.min(7,screen+1)); else if(prev) go(Math.max(0,screen-1)); else if(e.key==='Escape'){ setNopen(false); setSideOpen(false); } }; window.addEventListener('keydown',k); return ()=>window.removeEventListener('keydown',k); },[screen,lang]);
   const say=m=>{ setToast(m); note(m); setTimeout(()=>setToast(''),2600); };
   const [mode,setModeSt]=useState({2:'ai',4:'ai',5:'ai',6:'ai'}); const setMode=(n,v)=>setModeSt(m=>({...m,[n]:v}));
