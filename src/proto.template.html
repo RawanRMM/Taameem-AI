@@ -248,7 +248,7 @@ html[dir="rtl"] .npanel h4{letter-spacing:0}
 </style>
 <div id="root"></div>
 <script>
-const LOGO_LIGHT="/*__LOGO_LIGHT__*/", LOGO_DARK="/*__LOGO_DARK__*/", MARK="/*__MARK__*/";
+const _img=(v,f)=>v.startsWith("data:")?v:f; const LOGO_LIGHT=_img("/*__LOGO_LIGHT__*/","../assets/logo-light.png"), LOGO_DARK=_img("/*__LOGO_DARK__*/","../assets/logo-dark.png"), MARK=_img("/*__MARK__*/","../assets/mark.png");
 </script>
 <script>
 const {useState,useEffect,useRef,useMemo,useCallback}=React; const h=React.createElement;
@@ -436,7 +436,7 @@ function Strip({screen,done,go,lang,role}){ const t=T[lang].simple;
     t.names.map((nm,i)=>{ const n=i+1; const on=screen===n&&(n===7?role==='sup':role==='inst'); return h('button',{key:n,className:`step ${on?'on':''} ${done[n]?'done':''}`,onClick:()=>go(n)},
       h('span',{className:'c '+t.who[i]},done[n]?I('check'):I(t.icons[i])),h('span',{className:'n'},n),h('span',{className:'t'},nm)); })); }
 function SimpleGuide({n,lang}){ const t=T[lang].simple; if(!n) return null; const i=n-1;
-  return h('div',{className:'sguide fade'},h('span',{className:'who '+T[lang].simple.who[i]},T[lang].who[t.who[i]==='sys'?'ai':t.who[i]]),
+  return h('div',{className:'sguide fade'},h('span',{className:'who '+(t.who[i]==='sys'?'ai':t.who[i])},T[lang].who[t.who[i]==='sys'?'ai':t.who[i]]),
     h('div',null,h('div',{className:'big'},t.what[i]),h('div',{className:'ex'},h('b',null,t.exLabel),h('span',null,t.ex[i]))),
     h('div',{className:'do'},h('b',null,t.doLabel),t.press[i])); }
 function Doc({lang,hl,dim}){ return h('div',{className:'doc'}, h('span',{className:'stamp'},'SCAN · OCR 0.98'), h('span',{className:'ref'},CIRC.refEn), h('div',{style:{fontWeight:700,marginBottom:'.4rem'}},CIRC.subjectAr), CIRC.clauses.map(c=>h('div',{key:c.id},h('span',{className:`cl ${hl===c.id?'hl':''} ${dim&&hl&&hl!==c.id?'dim':''}`},h('b',{style:{color:'var(--green2)',marginInlineStart:6}},c.id,' — '),c.ar)))); }
