@@ -8,7 +8,7 @@ Built for the Financial Market Innovation Hackathon (The Financial Academy · Ca
 
 ## Run it / التشغيل
 
-Open `index.html` in any browser. That is the whole app: one file, no server, no install.
+Open `index.html` in any browser (projector / laptop version). Open `mobile.html` on a phone (responsive version, scan the QR code). Both are single files: no server, no install.
 
 - Simple view (default): a seven-step strip, one line per step, an example, and what to press.
 - Full view: the detailed screens with the AI / manual switch. Toggle it from the top bar.
