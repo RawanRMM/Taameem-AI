@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Taameem · From an announcement to proof</title>
+<meta name="description" content="Taameem turns a regulatory announcement into approved changes and proof, inside the institution's own map. A showcase of the prototype.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{--navy:#0F2237;--navy2:#16304A;--deep:#0A1626;--green:#119A78;--green2:#0B6F62;--teal:#7FD8C0;--mint:#DDF2EA;--cream:#F6F4EE;--ink:#14213A;--ink2:#4A5570;--muted:#7C8599;--line:#E3DED2;--coral:#B8412F;--gold:#B8892B;--goldSoft:#FBF0D3}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;letter-spacing:-.01em;text-wrap:balance}
+.mono{font-family:"IBM Plex Mono",monospace}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.k{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--green)}
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;transition:background .3s,backdrop-filter .3s}
+.nav.solid{background:rgba(10,22,38,.82);backdrop-filter:blur(12px)}
+.nav img{height:34px}
+.nav a{color:#DCE6F2;text-decoration:none;font-weight:600;font-size:.9rem;margin-left:22px;opacity:.85}
+.nav a:hover{opacity:1}
+.nav .cta{background:var(--green);color:#fff;padding:.55rem 1rem;border-radius:999px;opacity:1}
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;display:grid;align-items:center;background:radial-gradient(900px 600px at 85% 0%,rgba(31,166,156,.35),transparent 60%),radial-gradient(700px 500px at 0% 100%,rgba(47,107,255,.22),transparent 60%),var(--deep);color:var(--cream);overflow:hidden;padding:120px 0 80px}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1.4px) 0 0/22px 22px;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;pointer-events:none;animation:drift 18s ease-in-out infinite alternate}
+.orb.a{width:620px;height:620px;background:#1FA69C;right:-140px;top:-220px}
+.orb.b{width:520px;height:520px;background:#2F6BFF;left:-180px;bottom:-200px;animation-duration:24s;animation-delay:-8s}
+.orb.c{width:300px;height:300px;background:#7FD8C0;left:45%;top:60%;opacity:.25;animation-duration:30s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(-90px,70px) scale(1.12)}}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.05;margin:.6rem 0 1rem;font-weight:600}
+.hero h1 b{color:var(--teal);font-weight:600}
+.hero p.lead{font-size:1.15rem;color:#C9D4E2;max-width:56ch;margin:0 0 1.6rem}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.3rem;border-radius:12px;font-weight:700;text-decoration:none;font-size:.95rem;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.pri{background:var(--green);color:#fff;box-shadow:0 18px 40px -18px rgba(17,154,120,.8)}
+.btn.ghost{border:1px solid rgba(255,255,255,.25);color:#fff}
+.stats{display:flex;gap:28px;margin-top:2.2rem;flex-wrap:wrap}
+.stats div b{display:block;font-family:"IBM Plex Mono",monospace;font-size:1.7rem;color:var(--teal);line-height:1}
+.stats div small{color:#9DB0C4;font-size:.8rem}
+/* device mockup */
+.device{position:relative;perspective:1600px}
+.frame{position:relative;border-radius:18px;background:#0B1A2C;padding:10px;box-shadow:0 60px 120px -40px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.08);transform:rotateY(-10deg) rotateX(4deg);transform-style:preserve-3d;animation:floaty 7s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:rotateY(-10deg) rotateX(4deg) translateY(0)}50%{transform:rotateY(-10deg) rotateX(4deg) translateY(-14px)}}
+.frame .bar{display:flex;gap:6px;padding:4px 6px 10px}
+.frame .bar i{width:9px;height:9px;border-radius:50%;background:#2A4666}
+.frame img{width:100%;display:block;border-radius:10px;aspect-ratio:16/10;object-fit:cover;object-position:top}
+.frame .shine{position:absolute;inset:0;border-radius:18px;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.14) 45%,transparent 60%);background-size:250% 100%;animation:shine 6s linear infinite;pointer-events:none}
+@keyframes shine{from{background-position:120% 0}to{background-position:-120% 0}}
+.chip{position:absolute;background:#fff;color:var(--ink);border-radius:12px;padding:10px 14px;font-size:.82rem;font-weight:600;box-shadow:0 20px 40px -20px rgba(0,0,0,.6);display:flex;align-items:center;gap:8px;animation:floaty2 6s ease-in-out infinite}
+.chip i{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(17,154,120,.2)}
+.chip.c1{left:-30px;top:18%;animation-delay:-2s}.chip.c2{right:-24px;top:58%;animation-delay:-4s}.chip.c3{left:10%;bottom:-18px}
+@keyframes floaty2{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+/* ---------- sections ---------- */
+section{padding:96px 0}
+.sec-head{max-width:720px;margin-bottom:40px}
+.sec-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);margin:.4rem 0 .6rem;font-weight:600}
+.sec-head p{color:var(--ink2);font-size:1.05rem;margin:0}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.48s}
+/* problem */
+.problem{background:#fff}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.road{background:var(--cream);border:1px solid var(--line);border-radius:18px;padding:22px 24px}
+.road ol{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.road li{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:500}
+.road li span.t{font-family:"IBM Plex Mono",monospace;color:var(--coral);background:#FBE9E7;padding:2px 10px;border-radius:6px;font-size:.85rem;font-weight:600}
+.road .sum{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink2)}
+.road .sum b{font-family:"IBM Plex Mono",monospace;background:var(--coral);color:#fff;padding:6px 14px;border-radius:8px}
+.logos{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
+.logos span{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 14px;display:grid;place-items:center;height:56px}
+.logos img{height:34px;width:auto}
+.fine{background:var(--coral);color:#fff;border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:18px}
+.fine b{font-family:"IBM Plex Mono",monospace;font-size:1.6rem;white-space:nowrap}
+/* story player */
+.story{background:var(--deep);color:var(--cream)}
+.story .sec-head p{color:#C9D4E2}
+.player{display:grid;grid-template-columns:1.35fr 1fr;gap:28px;align-items:stretch}
+.screen{position:relative;border-radius:18px;overflow:hidden;background:#0B1A2C;box-shadow:0 50px 100px -50px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08)}
+.screen img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover;object-position:top;opacity:0;position:absolute;inset:0;transition:opacity .8s ease,transform 8s linear;transform:scale(1.02)}
+.screen img.on{opacity:1;position:relative;transform:scale(1.06)}
+.screen .prog{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.12)}
+.screen .prog i{display:block;height:100%;background:var(--teal);width:0;transition:width .2s linear}
+.steps{display:grid;gap:8px;align-content:start}
+.step{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:center;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);cursor:pointer;transition:background .25s,border-color .25s,transform .25s}
+.step:hover{background:rgba(255,255,255,.06)}
+.step.on{background:rgba(127,216,192,.12);border-color:rgba(127,216,192,.5);transform:translateX(6px)}
+.step .n{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-weight:700;color:#fff}
+.step .n.ai{background:var(--green)}.step .n.hu{background:#2A4666}.step .n.rd{background:var(--gold)}
+.step b{display:block;font-family:Fraunces,Georgia,serif;font-size:1.05rem;font-weight:600}
+.step small{color:#9DB0C4;font-size:.85rem}
+.legend{display:flex;gap:18px;margin-top:14px;font-size:.85rem;color:#9DB0C4;flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.rule{margin-top:28px;background:rgba(127,216,192,.1);border:1px solid rgba(127,216,192,.35);border-radius:14px;padding:16px 22px;font-family:Fraunces,Georgia,serif;font-style:italic;font-size:1.2rem;color:var(--teal);text-align:center}
+/* features */
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px;box-shadow:0 30px 60px -40px rgba(15,34,55,.35);transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-6px);box-shadow:0 40px 70px -40px rgba(15,34,55,.45)}
+.card .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:var(--mint);color:var(--green2);margin-bottom:14px}
+.card h3{margin:0 0 6px;font-size:1.15rem;font-weight:600}
+.card p{margin:0;color:var(--ink2);font-size:.95rem}
+.card img{width:100%;border-radius:10px;border:1px solid var(--line);margin-top:14px}
+/* security */
+.security{background:linear-gradient(180deg,#0F2237,#0A1626);color:var(--cream);text-align:center}
+.shield{width:130px;height:130px;border-radius:50%;margin:0 auto 22px;display:grid;place-items:center;background:var(--navy2);border:2px solid var(--teal);box-shadow:0 0 0 18px rgba(127,216,192,.08),0 0 80px rgba(127,216,192,.25);animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.security h2{font-size:clamp(1.9rem,3.6vw,2.8rem);margin:0 0 .6rem;font-weight:600}
+.security p{color:#C9D4E2;max-width:64ch;margin:0 auto 32px;font-size:1.08rem}
+.pill3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto}
+.pill3 div{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-top:3px solid var(--teal);border-radius:14px;padding:18px;font-weight:600}
+/* pricing */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tier{border:1px solid var(--line);border-radius:18px;padding:24px;background:#fff;text-align:center}
+.tier.hi{background:var(--green2);color:#fff;border-color:var(--green2);transform:scale(1.03)}
+.tier .k{color:var(--green)}.tier.hi .k{color:var(--teal)}
+.tier b.price{display:block;font-family:"IBM Plex Mono",monospace;font-size:1.9rem;margin:10px 0 6px}
+.tier p{margin:0;color:var(--ink2);font-size:.95rem}.tier.hi p{color:#C9D4E2}
+/* team + cta */
+.team{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.team div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 10px;text-align:center}
+.team .av{width:52px;height:52px;border-radius:50%;background:var(--green);margin:0 auto 10px;display:grid;place-items:center;color:#fff}
+.team b{display:block;font-family:Fraunces,Georgia,serif;font-size:1rem;font-weight:600}
+.team small{color:var(--green2);font-weight:700;letter-spacing:.08em;font-size:.72rem}
+.cta{background:var(--deep);color:var(--cream);text-align:center}
+.cta h2{font-size:clamp(1.8rem,3.4vw,2.6rem);margin:0 0 .5rem}
+.cta p{color:#9DB0C4;margin:0 0 24px}
+footer{background:#070F1B;color:#7C8599;font-size:.82rem;padding:22px 0;text-align:center}
+@media(max-width:900px){.hero .wrap,.pgrid,.player{grid-template-columns:1fr}.feat,.tiers,.pill3{grid-template-columns:1fr}.team{grid-template-columns:repeat(2,1fr)}.frame{transform:none;animation:none}.chip{display:none}.nav a:not(.cta){display:none}}
+html.flat .hero{min-height:auto;padding-top:140px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <img src="assets/logo-light.png" alt="Taameem">
+  <div><a href="#story">The story</a><a href="#product">Inside</a><a href="#security">Security</a><a href="#pricing">Pricing</a><a class="cta" href="https://rawanrmm.github.io/Taameem-AI/mobile.html" target="_blank" rel="noopener">Open the prototype</a></div>
+</nav>
+
+<header class="hero">
+  <div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+  <div class="wrap">
+    <div>
+      <span class="k" style="color:var(--teal)">Financial Market Innovation Hackathon · RegTech</span>
+      <h1>From an announcement to proof, <b>inside your own map.</b></h1>
+      <p class="lead">Taameem reads a regulator's announcement, finds what must change in your own policies and systems, assigns the work, and collects the proof. The AI proposes. A person approves. The regulator receives only what you send.</p>
+      <div class="btns">
+        <a class="btn pri" href="#story">▶ Watch the story</a>
+        <a class="btn ghost" href="https://rawanrmm.github.io/Taameem-AI/index.html" target="_blank" rel="noopener">Try the prototype</a>
+      </div>
+      <div class="stats">
+        <div><b data-count="42" data-suffix=" → 8">0</b><small>working days per announcement</small></div>
+        <div><b data-count="7">0</b><small>steps, one clear flow</small></div>
+        <div><b data-count="279">0</b><small>institutions with a compliance function</small></div>
+      </div>
+    </div>
+    <div class="device">
+      <div class="frame"><div class="bar"><i></i><i></i><i></i></div><img src="assets/screen-2.jpg" alt="Taameem prototype: the AI reads the announcement"><div class="shine"></div></div>
+      <div class="chip c1"><i></i>6 rules found · 09:05</div>
+      <div class="chip c2"><i></i>Gap found: 10 days → 5</div>
+      <div class="chip c3"><i></i>Report sent · regulator accepts</div>
+    </div>
+  </div>
+</header>
+
+<section class="problem" id="problem">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="k">The problem</span><h2>One announcement. Weeks of work by hand.</h2><p>A regulator issues an announcement to every institution it supervises. Inside each bank, insurer and capital market firm, a compliance officer starts the same manual road.</p></div>
+    <div class="pgrid">
+      <div class="reveal d1">
+        <div class="logos"><span><img src="assets/reg-sama.png" alt="SAMA"></span><span><img src="assets/reg-cma.png" alt="CMA"></span><span><img src="assets/reg-ia.png" alt="Insurance Authority"></span></div>
+        <p style="color:var(--ink2);margin:0 0 18px">Banks, capital market institutions, insurers, finance companies and fintechs all receive the same announcement, and each repeats the same work alone.</p>
+        <div class="fine"><b>≈ SAR 50k → 10m</b><span>what a single missed rule can cost, across SAMA, CMA, IA and PDPL</span></div>
+      </div>
+      <div class="road reveal d2">
+        <span class="k" style="color:var(--coral)">The compliance officer, by hand</span>
+        <ol style="margin-top:12px">
+          <li><span>Read the PDF, highlight every rule</span><span class="t">≈ 3 days</span></li>
+          <li><span>Type the rules into Excel by hand</span><span class="t">≈ 2 days</span></li>
+          <li><span>Ask around: which policy? which system?</span><span class="t">≈ 7 days</span></li>
+          <li><span>Chase five departments by email</span><span class="t">≈ 20 days</span></li>
+          <li><span>Collect proof when the regulator asks</span><span class="t">≈ 10 days</span></li>
+        </ol>
+        <div class="sum"><span>for one medium announcement</span><b>≈ 42 days</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="k" style="color:var(--teal)">The solution · live walkthrough</span><h2>Taameem in seven steps</h2><p>The same announcement, inside the prototype. It plays on its own; click any step to jump.</p></div>
+    <div class="player reveal d1">
+      <div class="screen" id="screen">
+        <img src="assets/screen-1.jpg" alt="Step 1" class="on">
+        <img src="assets/screen-2.jpg" alt="Step 2">
+        <img src="assets/screen-3.jpg" alt="Step 3">
+        <img src="assets/screen-4.jpg" alt="Step 4">
+        <img src="assets/screen-5.jpg" alt="Step 5">
+        <img src="assets/screen-6.jpg" alt="Step 6">
+        <img src="assets/screen-7.jpg" alt="Step 7">
+        <div class="prog"><i id="prog"></i></div>
+      </div>
+      <div class="steps" id="steps">
+        <div class="step on"><span class="n hu">1</span><div><b>Announcement arrives</b><small>uploaded by the compliance manager · 09:05</small></div></div>
+        <div class="step"><span class="n ai">2</span><div><b>AI reads it</b><small>Arabic text becomes six clear rules, each linked to its sentence</small></div></div>
+        <div class="step"><span class="n hu">3</span><div><b>Person approves</b><small>officer approves 5, fixes 1 · minutes, not days</small></div></div>
+        <div class="step"><span class="n ai">4</span><div><b>What must change</b><small>bank policy says 10 days, the new rule says 5 · gap found</small></div></div>
+        <div class="step"><span class="n ai">5</span><div><b>Tasks per team</b><small>Operations, IT and Legal each get an owner and a deadline</small></div></div>
+        <div class="step"><span class="n hu">6</span><div><b>Proof collected</b><small>5 files sealed with a digital fingerprint · report approved</small></div></div>
+        <div class="step"><span class="n rd">7</span><div><b>Sent to regulator</b><small>submitted by the compliance manager · regulator accepts</small></div></div>
+        <div class="legend"><span><i style="background:var(--green)"></i>AI does the work</span><span><i style="background:#2A4666"></i>A person decides</span><span><i style="background:var(--gold)"></i>Future · needs an agreement</span></div>
+      </div>
+    </div>
+    <div class="rule reveal d2">The AI proposes. A person approves. The regulator receives only what the institution sends.</div>
+  </div>
+</section>
+
+<section id="product">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="k">Inside the product</span><h2>What the compliance officer actually sees</h2><p>Real screens from the working prototype. Real announcements, a fictional demo bank.</p></div>
+    <div class="feat">
+      <div class="card reveal d1"><div class="ic">✦</div><h3>Every rule, traced to its sentence</h3><p>The Arabic letter on one side, the extracted rules on the other, each with a confidence score.</p><img src="assets/panel-2.jpg" alt=""></div>
+      <div class="card reveal d2"><div class="ic">⇄</div><h3>Your own map, not generic advice</h3><p>Each rule is compared with this bank's own policy and system. The gap and its owner appear in seconds.</p><img src="assets/panel-3.jpg" alt=""></div>
+      <div class="card reveal d3"><div class="ic">✓</div><h3>Proof the regulator can trust</h3><p>Every file carries a fingerprint. The regulator receives the report, checks it, and accepts.</p><img src="assets/panel-5.jpg" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<section class="security" id="security">
+  <div class="wrap">
+    <div class="shield reveal">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+    </div>
+    <h2 class="reveal d1">Your data never leaves your institution</h2>
+    <p class="reveal d2">Hosted inside the Kingdom. The regulator never accesses your systems. It receives only the report you choose to send, and every file carries a digital fingerprint so it can be verified unchanged.</p>
+    <div class="pill3">
+      <div class="reveal d1">Hosted inside the Kingdom</div>
+      <div class="reveal d2">Only what you choose to send</div>
+      <div class="reveal d3">A fingerprint on every file</div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="k">Business model</span><h2>Who pays, for what, how much</h2><p>The institution pays from its compliance budget. Annual subscription per client.</p></div>
+    <div class="tiers">
+      <div class="tier reveal d1"><span class="k">Basic</span><b class="price">SAR 70k / year</b><p>★ small capital market firms<br>cloud, hosted in the Kingdom</p></div>
+      <div class="tier hi reveal d2"><span class="k">Professional</span><b class="price">SAR 140k / year</b><p>on-premise setup available<br>cloud, hosted in the Kingdom</p></div>
+      <div class="tier reveal d3"><span class="k">On Demand</span><b class="price">Custom pricing</b><p>infrastructure designed for you, on demand<br>we design and run it, wherever you need it hosted</p></div>
+    </div>
+    <p class="reveal d4" style="text-align:center;font-family:Fraunces,Georgia,serif;font-style:italic;color:var(--green2);font-size:1.15rem;margin-top:28px">Our service costs 50% less than your current expected fines, and cuts your expected penalty for the year by 60%.</p>
+  </div>
+</section>
+
+<section style="background:#fff" id="team">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="k">Team</span><h2>Team Taameem</h2></div>
+    <div class="team">
+      <div class="reveal d1"><div class="av">●</div><b>Areej Almalki</b><small>CEO</small></div>
+      <div class="reveal d2"><div class="av">●</div><b>Abdulrhman Altayash</b><small>CTO</small></div>
+      <div class="reveal d3"><div class="av">●</div><b>Ibrahim Alshanqiti</b><small>CRO</small></div>
+      <div class="reveal d4"><div class="av">●</div><b>Rawan Aldosari</b><small>HEAD OF AI</small></div>
+      <div class="reveal d5"><div class="av">●</div><b>Abdulhakeem Almidan</b><small>HEAD OF DATA</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2 class="reveal">See it for yourself</h2>
+    <p class="reveal d1">Open the clickable prototype. It runs in your browser, on a laptop or a phone.</p>
+    <div class="btns reveal d2" style="justify-content:center">
+      <a class="btn pri" href="https://rawanrmm.github.io/Taameem-AI/index.html" target="_blank" rel="noopener">Open on a laptop</a>
+      <a class="btn ghost" href="https://rawanrmm.github.io/Taameem-AI/mobile.html" target="_blank" rel="noopener">Open on a phone</a>
+    </div>
+  </div>
+</section>
+<footer>Taameem · Financial Market Innovation Hackathon · The Financial Academy · Capital Market Authority · September 2026</footer>
+
+<script>
+(function () {
+  if (/[?&]flat/.test(location.search)) { document.documentElement.classList.add("flat"); document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); }); }
+  // nav background after scroll
+  var nav = document.getElementById('nav');
+  var onScroll = function () { nav.classList.toggle('solid', window.scrollY > 40); };
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  // reveal on scroll
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  // counters
+  var counted = false;
+  function count() {
+    if (counted) return; counted = true;
+    document.querySelectorAll('[data-count]').forEach(function (el) {
+      var to = +el.getAttribute('data-count'), suf = el.getAttribute('data-suffix') || '', t0 = performance.now();
+      (function tick(now) { var p = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - p, 3); el.textContent = Math.round(to * e) + (p >= 1 ? suf : ''); if (p < 1) requestAnimationFrame(tick); })(t0);
+    });
+  }
+  setTimeout(count, 400);
+  setTimeout(function () { document.querySelectorAll("[data-count]").forEach(function (el) { el.textContent = el.getAttribute("data-count") + (el.getAttribute("data-suffix") || ""); }); }, 2200);
+  // story player
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('#screen img'));
+  var steps = Array.prototype.slice.call(document.querySelectorAll('#steps .step'));
+  var prog = document.getElementById('prog'); var cur = 0, hold = 4200, t0 = performance.now(), paused = false;
+  function show(i) { cur = i; imgs.forEach(function (im, k) { im.classList.toggle('on', k === i); }); steps.forEach(function (s, k) { s.classList.toggle('on', k === i); }); t0 = performance.now(); }
+  steps.forEach(function (s, i) { s.addEventListener('click', function () { show(i); paused = true; setTimeout(function () { paused = false; t0 = performance.now(); }, 9000); }); });
+  (function loop(now) { var p = Math.min(1, (now - t0) / hold); prog.style.width = (p * 100) + '%'; if (!paused && p >= 1) show((cur + 1) % imgs.length); requestAnimationFrame(loop); })(t0);
+})();
+</script>
+</body>
+</html>
