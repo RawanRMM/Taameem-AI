@@ -1,0 +1,11 @@
+---
+description: Never git commit or push unless the user explicitly asks in that turn
+alwaysApply: true
+---
+
+# No commit or push without permission
+
+- **Never** run `git commit`, `git push`, or any command that publishes commits unless the user explicitly asks in the **current** message (e.g. "commit", "push", "commit and push").
+- Plan todos, "ship it", "deploy", "finish the task", or prior chat history do **not** count as permission.
+- If shipping seems needed, finish the code/build locally and **ask** before committing or pushing.
+- Do not amend, force-push, or skip hooks unless the user explicitly requests that exact action.
